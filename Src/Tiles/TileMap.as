@@ -64,7 +64,7 @@ package Src.Tiles
         switch(tiles[i].xFrame)
         {
           case OBJ_START:
-            game.entityManager.push(new Platformer(p));
+            game.entityManager.push(new Woman(p));
             break;
         }
       }
