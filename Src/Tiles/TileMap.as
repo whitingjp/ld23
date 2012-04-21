@@ -79,7 +79,8 @@ package Src.Tiles
         var tile:Tile = getTile(x,y);
         var spr:String = sprites[tile.t];
         var layer:Number = y*tileHeight+layerOffset;
-        if(tile.t != Tile.T_WALL) layer-=tileHeight;
+        if(tile.t == Tile.T_WALL) layer+=tileHeight/4;
+        else layer-=tileHeight;
         game.renderer.drawSprite(spr, x*tileWidth, y*tileHeight, layer, tile.xFrame, tile.yFrame);
       }
     }

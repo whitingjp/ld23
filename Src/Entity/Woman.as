@@ -25,7 +25,7 @@ package Src.Entity
       sprite.frame = 0;
       collider.pos = new Point(0,0);
       collider.speed = new Point(0,0);
-      collider.rect = new Rectangle(2,8,6,4);
+      collider.rect = new Rectangle(0,6,9,4);
     }
 
     public function updateRun():void
@@ -55,9 +55,9 @@ package Src.Entity
           collider.speed.y = 1;
       }
       if(!game.input.leftKey() && !game.input.rightKey())
-        collider.speed.x /= 1.5;
+        collider.speed.x /= 2;
       if(!game.input.upKey() && !game.input.downKey())
-        collider.speed.y /= 1.5;
+        collider.speed.y /= 2;
     }
 
     public override function update():void
