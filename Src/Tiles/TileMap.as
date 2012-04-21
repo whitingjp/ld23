@@ -18,6 +18,7 @@ package Src.Tiles
     private static const OBJ_SLUG:int=3;
     private static const OBJ_DESTROYER:int=4;
     private static const OBJ_BIGSLUG:int=5;
+    private static const OBJ_SNAKE:int=6;
   
     public static var tileWidth:int=10;
     public static var tileHeight:int=10;
@@ -97,6 +98,9 @@ package Src.Tiles
               break;
             case OBJ_BIGSLUG:
               game.entityManager.push(new BigSlug(p));
+              break;
+            case OBJ_SNAKE:
+              game.entityManager.push(new Snake(p));
               break;
           }
         }

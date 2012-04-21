@@ -69,6 +69,7 @@ package Src.Gfx
       sprites["slug"] = new SpriteDef(0,70,10,14,2);
       sprites["destroyer"] = new SpriteDef(20,70,10,14,2);
       sprites["bigslug"] = new SpriteDef(30,0,30,18,3);
+      sprites["snake"] = new SpriteDef(80,28,10,14,3);
 
       fade = 0;
       fadeSpeed = 0.005;
