@@ -21,7 +21,7 @@ package Src.Tiles
     private static var objSpr:String="objects";    
     
     public static const magic:int=0xface;
-    public static const version:int=1;    
+    public static const version:int=2;    
     
     public var width:int;
     public var height:int;
@@ -150,7 +150,7 @@ package Src.Tiles
         if(tile.t == Tile.T_ENTITY)
         {
           tile.t = Tile.T_NONE;
-          tile.xFrame = 1;
+          tile.xFrame = 0;
         }
         renderTileMap.setTileByIndex(i, tile);
       }

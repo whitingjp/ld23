@@ -12,7 +12,7 @@ package Src.Tiles
 
   public class TileEditor
   {
-    private var tileMap:TileMap;
+    public var tileMap:TileMap;
     private var pallete:TileMap;
     private var selected:Tile;
     private var inPallete:Boolean = false;
@@ -142,11 +142,17 @@ package Src.Tiles
     {
       var byteArray:ByteArray = new ByteArray();
       byteArray.writeInt(TileMap.magic);
-      byteArray.writeInt(TileMap.version); 
-      byteArray.writeInt(tileMap.width);
-      byteArray.writeInt(tileMap.height);
-      for(var i:int=0; i<tileMap.tiles.length; i++)
-        tileMap.tiles[i].addToByteArray(byteArray);
+      byteArray.writeInt(TileMap.version);
+      var mapStoreLength:int = game.mapStore.tileMaps.length;
+      byteArray.writeInt(mapStoreLength);
+      for(var mapIndex:int=0; mapIndex<mapStoreLength; mapIndex++)
+      {
+        var mapStoreTileMap:TileMap = game.mapStore.tileMaps[mapIndex];
+        byteArray.writeInt(mapStoreTileMap.width);
+        byteArray.writeInt(mapStoreTileMap.height);
+        for(var i:int=0; i<mapStoreTileMap.tiles.length; i++)
+          mapStoreTileMap.tiles[i].addToByteArray(byteArray);
+      }
       byteArray.compress();
         
       fileReference = new FileReference()
@@ -181,11 +187,19 @@ package Src.Tiles
         trace("Wrong level version!");
         return;
       }
-      var w:int = byteArray.readInt();
-      var h:int = byteArray.readInt();
-      tileMap.reset(w, h);
-      for(var i:int=0; i<tileMap.tiles.length; i++)
-        tileMap.tiles[i].readFromByteArray(byteArray);
+      game.mapStore.reset();
+      var mapStoreLength:int = byteArray.readInt();
+      for(var mapIndex:int=0; mapIndex<mapStoreLength; mapIndex++)
+      {
+        game.mapStore.increment(); 
+        var w:int = byteArray.readInt();
+        var h:int = byteArray.readInt();        
+        // this will change what we think of by tileMap        
+        tileMap.reset(w, h);
+        for(var i:int=0; i<tileMap.tiles.length; i++)
+          tileMap.tiles[i].readFromByteArray(byteArray);
+      }
+      game.mapStore.current = 0;
 	  }    
   }
 }

@@ -39,6 +39,7 @@ package Src
     public var renderer:Renderer;
     public var soundManager:SoundManager;
     public var tileMap:TileMap;
+    public var mapStore:MapStore;
     public var renderTileMap:TileMap;
     public var tileEditor:TileEditor;
     public var frontEnd:Frontend;
@@ -50,8 +51,9 @@ package Src
       input = new Input(this);
       renderer = new Renderer();	  
       soundManager = new SoundManager();
-      tileMap = new TileMap(this); 
       renderTileMap = new TileMap(this);
+      mapStore = new MapStore(this);
+      mapStore.increment(); // populate tilemap      
       frontEnd = new Frontend(this);
       camera = new Camera(this);
     }
@@ -96,6 +98,11 @@ package Src
           changeState(STATE_GAME);
         resetEntities();
       }
+      
+      if(input.keyPressedDictionary[Input.KEY_0])
+        mapStore.increment();
+      if(input.keyPressedDictionary[Input.KEY_9])
+        mapStore.decrement();
         
       // Update input last, so mouse presses etc. will register first..
       // also note this mode of operation isn't perfect, sometimes input
@@ -162,6 +169,14 @@ package Src
     public function changeState(state:int):void
     {
       gameState = state;
+    }
+    
+    public function swapTileMap(tileMap:TileMap):void
+    {
+      this.tileMap = tileMap;
+      this.tileMap.copyToRenderTileMap(renderTileMap);
+      if(tileEditor)
+        tileEditor.tileMap = this.tileMap;
     }
   }
 }
