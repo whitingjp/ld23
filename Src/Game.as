@@ -48,6 +48,9 @@ package Src
     
     public static var TRANSITION_SPEED:Number = 0.16;
     private var transition:Number;
+    
+    [Embed(source="../level/level.lev", mimeType="application/octet-stream")]
+		public static const Level: Class;	
 
     public function Game()
     {	  
@@ -58,7 +61,10 @@ package Src
       renderTileMap = new TileMap(this);
       oldRenderTileMap = new TileMap(this);
       mapStore = new MapStore(this);
-      mapStore.increment(); // populate tilemap      
+      mapStore.increment(); // populate tilemap
+      var byteArray:ByteArray = new Level as ByteArray;
+      byteArray.uncompress();
+      mapStore.unserialise(byteArray);
       frontEnd = new Frontend(this);
       camera = new Camera(this);
       transition = 0;

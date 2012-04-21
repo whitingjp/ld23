@@ -141,18 +141,7 @@ package Src.Tiles
     public function saveToFile(fileName:String):void    
     {
       var byteArray:ByteArray = new ByteArray();
-      byteArray.writeInt(TileMap.magic);
-      byteArray.writeInt(TileMap.version);
-      var mapStoreLength:int = game.mapStore.tileMaps.length;
-      byteArray.writeInt(mapStoreLength);
-      for(var mapIndex:int=0; mapIndex<mapStoreLength; mapIndex++)
-      {
-        var mapStoreTileMap:TileMap = game.mapStore.tileMaps[mapIndex];
-        byteArray.writeInt(mapStoreTileMap.width);
-        byteArray.writeInt(mapStoreTileMap.height);
-        for(var i:int=0; i<mapStoreTileMap.tiles.length; i++)
-          mapStoreTileMap.tiles[i].addToByteArray(byteArray);
-      }
+      game.mapStore.serialise(byteArray);
       byteArray.compress();
         
       fileReference = new FileReference()
@@ -176,30 +165,7 @@ package Src.Tiles
 	  {
       var byteArray:ByteArray = fileReference.data;
       byteArray.uncompress();
-           
-      if(TileMap.magic != byteArray.readInt())
-      {
-        trace("Not a game level file!");
-        return;
-      }
-      if(TileMap.version != byteArray.readInt())
-      {
-        trace("Wrong level version!");
-        return;
-      }
-      game.mapStore.reset();
-      var mapStoreLength:int = byteArray.readInt();
-      for(var mapIndex:int=0; mapIndex<mapStoreLength; mapIndex++)
-      {
-        game.mapStore.increment(); 
-        var w:int = byteArray.readInt();
-        var h:int = byteArray.readInt();        
-        // this will change what we think of by tileMap        
-        tileMap.reset(w, h);
-        for(var i:int=0; i<tileMap.tiles.length; i++)
-          tileMap.tiles[i].readFromByteArray(byteArray);
-      }
-      game.mapStore.current = 0;
+      game.mapStore.unserialise(byteArray);
 	  }    
   }
 }
