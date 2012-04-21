@@ -95,7 +95,7 @@ package Src.Entity
     public function enclosed():Boolean
     {
       for(var i:int=0; i<4; i++)
-        if(!checkSide(i)) return false;
+        if(!(checkSide(i) & collisionMask)) return false;
       return true;
     }
     

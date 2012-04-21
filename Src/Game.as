@@ -137,12 +137,27 @@ package Src
       input.update(); 
     }
     
-    private function resetEntities(keepWoman:Boolean=false):void
+    private function resetEntities(persist:Boolean=false):void
     {
+      var i:int;
       var woman:Woman = null;
-      if(keepWoman) woman = Woman(entityManager.findEntityOfClass(Woman));
-      entityManager.reset();    
-      if(woman) entityManager.push(woman);
+      var persisted:Array = null;
+      if(persist)
+      {
+        persisted = new Array();
+        for(i=0; i<entityManager.entities.length; i++)
+        {
+          var e:Entity = entityManager.entities[i];
+          if(e is Woman || e is Ball)
+            persisted.push(e);
+        }
+      }
+      
+      entityManager.reset();
+      if(persisted)
+        for(i=0; i<persisted.length; i++)
+          entityManager.push(persisted[i]);
+          
       if(gameState == STATE_GAME)
         tileMap.spawnEntities();
       tileMap.copyToRenderTileMap(renderTileMap);

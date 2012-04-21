@@ -53,6 +53,8 @@ package Src.Entity
     public override function update():void
     {
       collider.process();
+      if(collider.enclosed()) // check stuck
+        alive = false;
       updateMove();
       collider.clean();
     }
