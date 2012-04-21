@@ -50,8 +50,6 @@ package Src.Tiles
       tiles = new Array();
       for(var i:int=0; i<width*height; i++)
           tiles.push(new Tile());
-
-      getTile(0,3).t = Tile.T_WALL;
     }
     
     public function spawnEntities():void
@@ -73,19 +71,46 @@ package Src.Tiles
         }
       }
     }
+    
+    public function render_tile(tile:Tile, x:int, y:int, layer:Number):void
+    {
+      game.renderer.drawSprite(sprites[tile.t], x, y, layer, tile.xFrame, tile.yFrame);
+    }
+    
+    public function render_transition_tile(tile:Tile, old:Tile, x:int, y:int, transition:Number, layer:Number):void
+    {      
+      if(tile.t != old.t && transition < 1)
+      {
+        var frame:int=-1;
+        if(tile.t == Tile.T_WALL && old.t == Tile.T_NONE)
+          frame = transition*5;
+        else if(tile.t == Tile.T_NONE && old.t == Tile.T_WALL)
+          frame = 4-transition*5;
+        if(frame != -1)
+        {
+          game.renderer.drawSprite("walltransition", x, y, layer, frame, tile.yFrame);
+          return;
+        }
+      }
+      
+      // no transition code found, default to just drawing
+      render_tile(tile, x, y, layer);
+    }
 
-    public function render(layerOffset:Number=0):void
+    public function render(layerOffset:Number=0, transition:Number=1, old:TileMap=null):void
     {
       for(var i:int=0; i<tiles.length; i++)
       {
         var y:int = i/width;
         var x:int = i-(y*width);
         var tile:Tile = getTile(x,y);
-        var spr:String = sprites[tile.t];
         var layer:Number = y*tileHeight+layerOffset;
         if(tile.t == Tile.T_WALL) layer+=tileHeight/4;
         else layer-=tileHeight;
-        game.renderer.drawSprite(spr, x*tileWidth, y*tileHeight, layer, tile.xFrame, tile.yFrame);
+        if(old)
+          render_transition_tile(tile, old.getTile(x,y), x*tileWidth, y*tileHeight, transition, layer);
+        else
+          render_tile(tile, x*tileWidth, y*tileHeight, layer);
       }
     }
     

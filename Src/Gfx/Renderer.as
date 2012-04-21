@@ -62,6 +62,7 @@ package Src.Gfx
       sprites["objects"] = new SpriteDef(0,28,10,14,2,1);
       sprites["mapadvancer"] = new SpriteDef(10,28,10,14);
       sprites["marker"] = new SpriteDef(63,0,1,1);
+      sprites["walltransition"] = new SpriteDef(0,14,10,14,5,1);
 
       fade = 0;
       fadeSpeed = 0.005;

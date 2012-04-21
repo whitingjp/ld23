@@ -41,9 +41,13 @@ package Src
     public var tileMap:TileMap;
     public var mapStore:MapStore;
     public var renderTileMap:TileMap;
+    public var oldRenderTileMap:TileMap;
     public var tileEditor:TileEditor;
     public var frontEnd:Frontend;
     public var camera:Camera;
+    
+    public static var TRANSITION_SPEED:Number = 0.16;
+    private var transition:Number;
 
     public function Game()
     {	  
@@ -52,10 +56,12 @@ package Src
       renderer = new Renderer();	  
       soundManager = new SoundManager();
       renderTileMap = new TileMap(this);
+      oldRenderTileMap = new TileMap(this);
       mapStore = new MapStore(this);
       mapStore.increment(); // populate tilemap      
       frontEnd = new Frontend(this);
       camera = new Camera(this);
+      transition = 0;
     }
 
     public function init(w:int, h:int, pixelSize:int, targetFps:int, stage:Stage):void
@@ -110,6 +116,11 @@ package Src
       if(gameState == STATE_EDITING)
         tileEditor.update();
         
+      if(transition < 1)
+        transition += TRANSITION_SPEED;
+      else
+        transition = 1;
+        
       if(!IS_FINAL)
         debugKeys();
       
@@ -136,7 +147,7 @@ package Src
       if(gameState == STATE_EDITING)
         tileMap.render();
       else
-        renderTileMap.render();
+        renderTileMap.render(0,transition,oldRenderTileMap);
       entityManager.render();
       renderer.setCamera();
       if(gameState == STATE_EDITING)
@@ -183,11 +194,14 @@ package Src
     
     public function swapTileMap(tileMap:TileMap):void
     {
+      if(this.tileMap)
+        this.tileMap.copyToRenderTileMap(oldRenderTileMap);
       this.tileMap = tileMap;
       this.tileMap.copyToRenderTileMap(renderTileMap);
       if(tileEditor)
         tileEditor.tileMap = this.tileMap;
       resetEntities();
+      transition = 0;
     }
   }
 }
