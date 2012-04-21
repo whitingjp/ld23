@@ -141,5 +141,19 @@ package Src.Tiles
       }
       return CCollider.COL_NONE;
     }
+    
+    public function copyToRenderTileMap(renderTileMap:TileMap):void
+    {
+      for(var i:int=0; i<tiles.length; i++)
+      {
+        var tile:Tile = tiles[i].clone();
+        if(tile.t == Tile.T_ENTITY)
+        {
+          tile.t = Tile.T_NONE;
+          tile.xFrame = 1;
+        }
+        renderTileMap.setTileByIndex(i, tile);
+      }
+    }
   }
 }

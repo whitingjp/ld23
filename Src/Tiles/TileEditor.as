@@ -121,7 +121,7 @@ package Src.Tiles
         autoTile(p.x, p.y-1);
         autoTile(p.x+1, p.y);
         autoTile(p.x, p.y+1);
-        autoTile(p.x-1, p.y);        
+        autoTile(p.x-1, p.y);
       }
       
       if(game.input.keyPressedDictionary[Input.KEY_C])

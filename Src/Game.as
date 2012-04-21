@@ -39,6 +39,7 @@ package Src
     public var renderer:Renderer;
     public var soundManager:SoundManager;
     public var tileMap:TileMap;
+    public var renderTileMap:TileMap;
     public var tileEditor:TileEditor;
     public var frontEnd:Frontend;
     public var camera:Camera;
@@ -49,7 +50,8 @@ package Src
       input = new Input(this);
       renderer = new Renderer();	  
       soundManager = new SoundManager();
-      tileMap = new TileMap(this);      
+      tileMap = new TileMap(this); 
+      renderTileMap = new TileMap(this);
       frontEnd = new Frontend(this);
       camera = new Camera(this);
     }
@@ -106,6 +108,7 @@ package Src
       entityManager.reset();      
       if(gameState == STATE_GAME)
         tileMap.spawnEntities();
+      tileMap.copyToRenderTileMap(renderTileMap);
     }
 
     private function render():void
@@ -113,7 +116,10 @@ package Src
       renderer.cls();
 	  
       renderer.setCamera(camera);
-      tileMap.render();
+      if(gameState == STATE_EDITING)
+        tileMap.render();
+      else
+        renderTileMap.render();
       entityManager.render();
       renderer.setCamera();
       if(gameState == STATE_EDITING)
