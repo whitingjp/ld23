@@ -18,6 +18,7 @@ package Src.Entity
     {      
       sprite = new CSprite(this, "player");
       collider = new CCollider(this);
+      collider.collisionMask = CCollider.COL_SOLID | CCollider.COL_NOPLAYER;
       reset();
       collider.pos = pos;      
     }

@@ -58,11 +58,11 @@ package Src.Gfx
       sprites = new Object();
       sprites["player"] = new SpriteDef(0,42,10,14,8,2);
       sprites["decoration"] = new SpriteDef(0,0,10,14,2,1);
-      sprites["walls"] = new SpriteDef(40,14,10,14,1,1);
-      sprites["objects"] = new SpriteDef(0,28,10,14,3,1);
+      sprites["walls"] = new SpriteDef(0,14,10,14,3,1);
+      sprites["objects"] = new SpriteDef(0,28,10,14,5,1);
       sprites["mapadvancer"] = new SpriteDef(10,28,10,14);
       sprites["marker"] = new SpriteDef(63,0,1,1);
-      sprites["walltransition"] = new SpriteDef(0,14,10,14,5,1);
+      sprites["walltransition"] = new SpriteDef(0,84,10,14,5,3);
       sprites["ball"] = new SpriteDef(20,28,10,14);
 
       fade = 0;

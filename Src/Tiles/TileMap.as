@@ -90,6 +90,11 @@ package Src.Tiles
     
     public function render_tile(tile:Tile, x:int, y:int, layer:Number):void
     {
+      if(tile.t == Tile.T_WALL)
+      {
+        game.renderer.drawSprite(sprites[0], x, y, layer, 0, 0);
+        game.renderer.drawSprite(sprites[tile.t], x, y, layer+tileHeight+tileHeight/4, tile.xFrame, tile.yFrame);
+      }
       game.renderer.drawSprite(sprites[tile.t], x, y, layer, tile.xFrame, tile.yFrame);
     }
     
@@ -97,14 +102,22 @@ package Src.Tiles
     {      
       if(tile.t != old.t && transition < 1)
       {
-        var frame:int=-1;
+        var xFrame:int=-1;
+        var yFrame:int=-1;
         if(tile.t == Tile.T_WALL && old.t == Tile.T_NONE)
-          frame = transition*5;
-        else if(tile.t == Tile.T_NONE && old.t == Tile.T_WALL)
-          frame = 4-transition*5;
-        if(frame != -1)
         {
-          game.renderer.drawSprite("walltransition", x, y, layer, frame, tile.yFrame);
+          xFrame = transition*5;
+          yFrame = tile.xFrame;
+        }
+        else if(tile.t == Tile.T_NONE && old.t == Tile.T_WALL)
+        {
+          xFrame = 4-transition*5;
+          yFrame = old.xFrame;
+        }
+        if(xFrame != -1)
+        {
+          game.renderer.drawSprite(sprites[0], x, y, layer, 0, 0);
+          game.renderer.drawSprite("walltransition", x, y, layer+tileHeight/4, xFrame, yFrame);
           return;
         }
       }
@@ -120,9 +133,7 @@ package Src.Tiles
         var y:int = i/width;
         var x:int = i-(y*width);
         var tile:Tile = getTile(x,y);
-        var layer:Number = y*tileHeight+layerOffset;
-        if(tile.t == Tile.T_WALL) layer+=tileHeight/4;
-        else layer-=tileHeight;
+        var layer:Number = y*tileHeight-tileHeight+layerOffset;
         if(old)
           render_transition_tile(tile, old.getTile(x,y), x*tileWidth, y*tileHeight, transition, layer);
         else
@@ -180,9 +191,14 @@ package Src.Tiles
     
     public function getColAtPos(p:Point):int
     {
-      switch(getTileAtPos(p).t)
+      var tile:Tile = getTileAtPos(p);
+      switch(tile.t)
       {
-        case Tile.T_WALL: return CCollider.COL_SOLID;
+        case Tile.T_WALL: 
+          if(tile.xFrame == 1)
+            return CCollider.COL_NOPLAYER;
+          else
+            return CCollider.COL_SOLID;
       }
       return CCollider.COL_NONE;
     }

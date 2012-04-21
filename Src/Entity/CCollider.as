@@ -12,6 +12,7 @@ package Src.Entity
     public static const COL_NONE:int = 0;
     public static const COL_SOLID:int = 1;
     public static const COL_HURT:int = 2;
+    public static const COL_NOPLAYER:int = 4;
   
     private var e:Entity;
     public var pos:Point;
@@ -20,6 +21,7 @@ package Src.Entity
     public var collides:Array;
     public var elasticity:Number;
     public var numSideChecks:int = 3;
+    public var collisionMask:int = COL_SOLID;
   
     public function CCollider(e:Entity)
     {
@@ -61,9 +63,9 @@ package Src.Entity
     
     public function process():void
     {
-      if((collides[1] | collides[3]) & COL_SOLID)
+      if((collides[1] | collides[3]) & collisionMask)
         speed.x *= -elasticity;
-      if((collides[0] | collides[2]) & COL_SOLID)
+      if((collides[0] | collides[2]) & collisionMask)
         speed.y *= -elasticity;
     }
     
@@ -80,13 +82,13 @@ package Src.Entity
       pos.x += speed.x/subMoves;
       side = speed.x < 0 ? 3 : 1;
       collides[side] |= checkSide(side, pos);
-      if(collides[side] & COL_SOLID)
+      if(collides[side] & collisionMask)
         pos.x -= speed.x/subMoves;
         
       pos.y += speed.y/subMoves;
       side = speed.y < 0 ? 0 : 2;
       collides[side] |= checkSide(side, pos);
-      if(collides[side] & COL_SOLID)
+      if(collides[side] & collisionMask)
         pos.y -= speed.y/subMoves;        
     }
     
