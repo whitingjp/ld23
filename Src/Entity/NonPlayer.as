@@ -38,6 +38,8 @@ package Src.Entity
         var e:Entity = game.entityManager.entities[i];
         if(e is Target)
           if(!Target(e).activeTimer) allActive = false;
+        if(e is Slug)
+          allActive = false;
       }      
     }
     
