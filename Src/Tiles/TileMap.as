@@ -14,6 +14,7 @@ package Src.Tiles
   {  
     private static const OBJ_START:int=0;
     private static const OBJ_MAPADVANCER:int=1;
+    private static const OBJ_BALL:int=2;
   
     public static var tileWidth:int=10;
     public static var tileHeight:int=10;
@@ -79,6 +80,9 @@ package Src.Tiles
             break;
           case OBJ_MAPADVANCER:
             game.entityManager.push(new MapAdvancer(p));
+            break;
+          case OBJ_BALL:
+            game.entityManager.push(new Ball(p));
             break;
         }
       }
