@@ -47,6 +47,12 @@ package Src.Entity
             collider.speed.y += woman.collider.speed.y;
           }
         }
+        if(e is Slug)
+        {
+          var slug:Slug = Slug(e);
+          if(collider.intersects(slug.collider))
+            slug.alive = false;
+        }
       }
     }
     
