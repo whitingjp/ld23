@@ -51,8 +51,21 @@ package Src.Entity
         {
           var slug:Slug = Slug(e);
           if(collider.intersects(slug.collider))
+          {
+            collider.speed.x *= -1;
+            collider.speed.y *= -1;
             slug.alive = false;
+          }
         }
+        if(e is BigSlug)
+        {
+          var bigslug:BigSlug = BigSlug(e);
+          if(collider.intersects(bigslug.collider))
+          {
+            collider.speed.y += 0.05;
+            bigslug.hurt();
+          }
+        }        
       }
     }
     

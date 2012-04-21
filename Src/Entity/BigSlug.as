@@ -16,6 +16,8 @@ package Src.Entity
     public var dstBitmap:BitmapData;
     public var anim:Number;
     public var renderOff:Point;
+    public var health:Number;
+    public var hurtTimer:Number;
 
     public function BigSlug(pos:Point)
     {      
@@ -32,6 +34,27 @@ package Src.Entity
       collider.rect = new Rectangle(1,4,28,10);
       anim = 0;
       renderOff = new Point(0,0);
+      health = 1;
+      hurtTimer = 0;
+    }
+    
+    public function hurt():void
+    {
+      if(hurtTimer <= 0)
+      {
+        health -= 0.05;
+        hurtTimer = 1;
+        if(health < 0)
+        {
+          alive = false;
+          game.mapStore.increment();
+        }
+        var xpos:int = Math.random()*70+10;
+        game.entityManager.push(new Slug(new Point(xpos,10)));
+      } else
+      {
+        hurtTimer = 1;
+      }
     }
     
     public function updateWobble():void
@@ -41,15 +64,17 @@ package Src.Entity
       {
         srcBitmap = new BitmapData(30,18,true);
         eyeBitmap = new BitmapData(30,18,true);
-        game.renderer.doActualSpriteDraw(srcBitmap, "bigslug", 0, 0);
-        game.renderer.doActualSpriteDraw(eyeBitmap, "bigslug", 0, 0, 1);
+        game.renderer.doActualSpriteDraw(srcBitmap, "bigslug", 0, 0);        
       }
+      
+      game.renderer.doActualSpriteDraw(eyeBitmap, "bigslug", 0, 0, hurtTimer > 0 ? 2 : 1);
       
       var matrix:Matrix = new Matrix();
       var xwob:Number = (Math.sin(anim*5)+1)/20+1;
       var ywob:Number = (Math.sin(anim*7)+1)/20+1;
       var eyewob:Number = (Math.sin(anim*3)+1)*4;
-      matrix.scale(xwob, ywob);
+      var healthMod:Number = (health+5)/6;
+      matrix.scale(xwob*healthMod, ywob*healthMod);
       renderOff.x = xwob*30-30;
       renderOff.y = ywob*18-18;
       dstBitmap.fillRect(dstBitmap.rect, 0x00000000);
@@ -59,6 +84,9 @@ package Src.Entity
 
     public override function update():void
     {
+      if(hurtTimer > 0)
+        hurtTimer -= 0.04;
+    
       collider.process();
       updateWobble();
       collider.clean();

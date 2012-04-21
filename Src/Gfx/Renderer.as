@@ -61,14 +61,14 @@ package Src.Gfx
       sprites["walls"] = new SpriteDef(0,14,10,14,3,1);
       sprites["objects"] = new SpriteDef(0,28,10,14,7,1);
       sprites["mapadvancer"] = new SpriteDef(10,28,10,14);
-      sprites["marker"] = new SpriteDef(63,0,1,1);
+      sprites["marker"] = new SpriteDef(60,70,1,1);
       sprites["walltransition"] = new SpriteDef(0,84,10,14,5,3);
       sprites["ball"] = new SpriteDef(20,28,10,14);
       sprites["target"] = new SpriteDef(40,112,10,14,2);
       sprites["nonplayer"] = new SpriteDef(40,98,10,14,2);
       sprites["slug"] = new SpriteDef(0,70,10,14,2);
       sprites["destroyer"] = new SpriteDef(20,70,10,14,2);
-      sprites["bigslug"] = new SpriteDef(60,70,30,18,2);
+      sprites["bigslug"] = new SpriteDef(30,0,30,18,3);
 
       fade = 0;
       fadeSpeed = 0.005;
