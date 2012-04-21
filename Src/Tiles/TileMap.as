@@ -87,6 +87,8 @@ package Src.Tiles
               break;
           }
         }
+        if(tiles[i].t == Tile.T_WALL && tiles[i].xFrame==1)
+          game.entityManager.push(new NonPlayer(p));
         if(tiles[i].t == Tile.T_WALL && tiles[i].xFrame==2)
           game.entityManager.push(new Target(p));
       }
@@ -200,7 +202,12 @@ package Src.Tiles
       {
         case Tile.T_WALL: 
           if(tile.xFrame == 1)
-            return CCollider.COL_NOPLAYER;
+          {
+            if(NonPlayer.allActive)
+              return CCollider.COL_NONE;
+            else
+              return CCollider.COL_NOPLAYER;
+          }
           else
             return CCollider.COL_SOLID;
       }
