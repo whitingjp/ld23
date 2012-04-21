@@ -73,18 +73,22 @@ package Src.Tiles
         var x:int = i-(y*width);
         var p:Point = new Point(x*tileWidth, y*tileHeight);
         if(tiles[i].t == Tile.T_ENTITY)
-        switch(tiles[i].xFrame)
         {
-          case OBJ_START:
-            game.entityManager.push(new Woman(p));
-            break;
-          case OBJ_MAPADVANCER:
-            game.entityManager.push(new MapAdvancer(p));
-            break;
-          case OBJ_BALL:
-            game.entityManager.push(new Ball(p));
-            break;
+          switch(tiles[i].xFrame)
+          {
+            case OBJ_START:
+              game.entityManager.push(new Woman(p));
+              break;
+            case OBJ_MAPADVANCER:
+              game.entityManager.push(new MapAdvancer(p));
+              break;
+            case OBJ_BALL:
+              game.entityManager.push(new Ball(p));
+              break;
+          }
         }
+        if(tiles[i].t == Tile.T_WALL && tiles[i].xFrame==2)
+          game.entityManager.push(new Target(p));
       }
     }
     

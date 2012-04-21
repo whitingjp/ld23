@@ -64,6 +64,7 @@ package Src.Gfx
       sprites["marker"] = new SpriteDef(63,0,1,1);
       sprites["walltransition"] = new SpriteDef(0,84,10,14,5,3);
       sprites["ball"] = new SpriteDef(20,28,10,14);
+      sprites["target"] = new SpriteDef(40,112,10,14,2);
 
       fade = 0;
       fadeSpeed = 0.005;
