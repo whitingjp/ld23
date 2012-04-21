@@ -59,11 +59,30 @@ package Src.Entity
       if(!game.input.upKey() && !game.input.downKey())
         collider.speed.y /= 2;
     }
+    
+    public function updateEntityCollision():void
+    {
+      for(var i:int = 0; i<game.entityManager.entities.length; i++)
+      {
+        var e:Entity = game.entityManager.entities[i];
+        if(e is MapAdvancer)
+        {
+          var ma:MapAdvancer = MapAdvancer(e);
+          if(collider.intersects(ma.collider))
+          {
+            game.mapStore.increment(); // this resets entities
+            game.entityManager.push(this); // re-add me
+            return;
+          }
+        }
+      }
+    }
 
     public override function update():void
     {
       collider.process();
       updateRun();
+      updateEntityCollision();
       collider.clean();
     }    
 	

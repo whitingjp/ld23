@@ -79,17 +79,9 @@ package Src
 	  
       stage.addEventListener(Event.ENTER_FRAME, enterFrame);
     }
-
-    private function update():void
+    
+    private function debugKeys():void
     {
-      camera.update();
-      renderer.update();
-      entityManager.update();
-      if(gameState == STATE_FE)
-        frontEnd.update();
-      if(gameState == STATE_EDITING)
-        tileEditor.update();
-        
       if(input.keyPressedDictionary[Input.KEY_E])
       {
         if(gameState == STATE_GAME)
@@ -103,6 +95,24 @@ package Src
         mapStore.increment();
       if(input.keyPressedDictionary[Input.KEY_9])
         mapStore.decrement();
+        
+      if(input.keyPressedDictionary[Input.KEY_M])
+        entityManager.shouldRenderColliders = !entityManager.shouldRenderColliders;
+    }
+
+    private function update():void
+    {
+      camera.update();
+      renderer.update();
+      entityManager.update();
+      if(gameState == STATE_FE)
+        frontEnd.update();
+      if(gameState == STATE_EDITING)
+        tileEditor.update();
+        
+      if(!IS_FINAL)
+        debugKeys();
+      
         
       // Update input last, so mouse presses etc. will register first..
       // also note this mode of operation isn't perfect, sometimes input
@@ -177,6 +187,7 @@ package Src
       this.tileMap.copyToRenderTileMap(renderTileMap);
       if(tileEditor)
         tileEditor.tileMap = this.tileMap;
+      resetEntities();
     }
   }
 }

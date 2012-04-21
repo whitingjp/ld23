@@ -13,6 +13,7 @@ package Src.Tiles
   public class TileMap
   {  
     private static const OBJ_START:int=0;
+    private static const OBJ_MAPADVANCER:int=1;
   
     public static var tileWidth:int=10;
     public static var tileHeight:int=10;
@@ -65,6 +66,9 @@ package Src.Tiles
         {
           case OBJ_START:
             game.entityManager.push(new Woman(p));
+            break;
+          case OBJ_MAPADVANCER:
+            game.entityManager.push(new MapAdvancer(p));
             break;
         }
       }

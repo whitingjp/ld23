@@ -21,9 +21,9 @@ package Src.Entity
       frame = 0;
     }
     
-    public function render(pos:Point):void
+    public function render(pos:Point, layerOffset:Number=0):void
     {
-      e.game.renderer.drawSprite(sprite, pos.x, pos.y, pos.y, frame);
+      e.game.renderer.drawSprite(sprite, pos.x, pos.y, pos.y+layerOffset, frame);
     }
   }
 }

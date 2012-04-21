@@ -9,6 +9,7 @@ package Src.Entity
   {
     public var alive:Boolean;
     private var manager:EntityManager;
+    public var type:String;
 
     public function Entity()
     {

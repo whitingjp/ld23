@@ -89,5 +89,14 @@ package Src.Entity
       if(collides[side] & COL_SOLID)
         pos.y -= speed.y/subMoves;        
     }
+    
+    public function intersects(other:CCollider):Boolean
+    {
+      if(pos.x + rect.x + rect.width < other.pos.x) return false;
+      if(pos.x > other.pos.x + other.rect.x + other.rect.width) return false;
+      if(pos.y + rect.y + rect.height < other.pos.y) return false;
+      if(pos.y > other.pos.y + other.rect.y + other.rect.height) return false;
+      return true;
+    }
   }
 }
