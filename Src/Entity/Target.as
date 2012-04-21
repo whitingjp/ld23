@@ -56,6 +56,7 @@ package Src.Entity
     
     public override function render():void
     {
+      if(game.transition < 1) return;
       sprite.xframe = activeTimer > 0 ? 1 : 0;
       sprite.render(collider.pos, TileMap.tileHeight/4+1);
     }

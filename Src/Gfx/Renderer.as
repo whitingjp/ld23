@@ -66,6 +66,7 @@ package Src.Gfx
       sprites["ball"] = new SpriteDef(20,28,10,14);
       sprites["target"] = new SpriteDef(40,112,10,14,2);
       sprites["nonplayer"] = new SpriteDef(40,98,10,14,2);
+      sprites["slug"] = new SpriteDef(0,70,10,14,2);
 
       fade = 0;
       fadeSpeed = 0.005;

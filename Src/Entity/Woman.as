@@ -79,6 +79,16 @@ package Src.Entity
             return;
           }
         }
+        if(e is Slug)
+        {
+          var sl:Slug = Slug(e);
+          if(collider.intersects(sl.collider))
+          {
+            game.mapStore.decrement(); // this resets entities
+            game.entityManager.push(this); // re-add me
+            return;
+          }
+        }
       }
     }
     

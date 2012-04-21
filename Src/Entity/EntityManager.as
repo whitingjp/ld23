@@ -56,6 +56,15 @@ package Src.Entity
         }
       }
     }
+    
+    public function findEntityOfClass(cl:Class):Entity
+    {
+      for(var i:int=0; i<entities.length; i++)
+      {
+        if(entities[i] is cl) return entities[i];
+      }
+      return null;
+    }
 
     public function render():void
     {      

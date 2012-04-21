@@ -46,8 +46,8 @@ package Src
     public var frontEnd:Frontend;
     public var camera:Camera;
     
-    public static var TRANSITION_SPEED:Number = 0.16;
-    private var transition:Number;
+    public static var TRANSITION_SPEED:Number = 0.15;
+    public var transition:Number;
     
     [Embed(source="../level/level.lev", mimeType="application/octet-stream")]
 		public static const Level: Class;	

@@ -15,6 +15,7 @@ package Src.Tiles
     private static const OBJ_START:int=0;
     private static const OBJ_MAPADVANCER:int=1;
     private static const OBJ_BALL:int=2;
+    private static const OBJ_SLUG:int=3;
   
     public static var tileWidth:int=10;
     public static var tileHeight:int=10;
@@ -85,6 +86,8 @@ package Src.Tiles
             case OBJ_BALL:
               game.entityManager.push(new Ball(p));
               break;
+            case OBJ_SLUG:
+              game.entityManager.push(new Slug(p));
           }
         }
         if(tiles[i].t == Tile.T_WALL && tiles[i].xFrame==1)
@@ -106,7 +109,7 @@ package Src.Tiles
     
     public function render_transition_tile(tile:Tile, old:Tile, x:int, y:int, transition:Number, layer:Number):void
     {      
-      if(tile.t != old.t && transition < 1)
+      if(transition < 1)
       {
         var xFrame:int=-1;
         var yFrame:int=-1;
@@ -119,6 +122,19 @@ package Src.Tiles
         {
           xFrame = 4-transition*5;
           yFrame = old.xFrame;
+        }
+        if(tile.t == Tile.T_WALL && old.t == Tile.T_WALL && tile.xFrame != old.xFrame)
+        {
+          // transition between two wall types
+          if(transition < 0.5)
+          {
+            xFrame = 4-transition*10;
+            yFrame = old.xFrame;
+          } else
+          {
+            xFrame = (transition-0.5)*10;
+            yFrame = tile.xFrame;
+          }
         }
         if(xFrame != -1)
         {
