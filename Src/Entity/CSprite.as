@@ -23,7 +23,7 @@ package Src.Entity
     
     public function render(pos:Point):void
     {
-      e.game.renderer.drawSprite(sprite, pos.x, pos.y, frame);
+      e.game.renderer.drawSprite(sprite, pos.x, pos.y, pos.y, frame);
     }
   }
 }

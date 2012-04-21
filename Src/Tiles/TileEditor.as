@@ -134,8 +134,7 @@ package Src.Tiles
     {
       if(inPallete)
       {
-        game.renderer.cls();
-        pallete.render();
+        pallete.render(1000);
       }
     }
     

@@ -35,15 +35,17 @@ package Src.Gfx
     private var fadeCol:uint;
     
     public var camera:Camera;
+    
+    public var spriteDrawArray:Array;
 
     public function init(width:int, height:int, pixelSize:int):void
     {
-	  this.width = width;
-	  this.height = height;
-	  this.pixelSize = pixelSize;
+      this.width = width;
+      this.height = height;
+      this.pixelSize = pixelSize;
 	  
-	  bitmap = new Bitmap(new BitmapData(width, height, false, 0xAAAAAA ) );
-	  bitmap.scaleX = bitmap.scaleY = pixelSize;
+      bitmap = new Bitmap(new BitmapData(width, height, false, 0xAAAAAA ) );
+      bitmap.scaleX = bitmap.scaleY = pixelSize;
 	  
       spriteSheetSrc = new spriteSheetClass() as BitmapAsset;
       spriteSheet = spriteSheetSrc.bitmapData;
@@ -54,41 +56,65 @@ package Src.Gfx
                                     height*pixelSize, false);
 
       sprites = new Object();
-      sprites["player"] = new SpriteDef(0,0,16,16);
-      sprites["decoration"] = new SpriteDef(0,0,1,1);
-      sprites["walls"] = new SpriteDef(0,16,16,16,5,4);
-      sprites["objects"] = new SpriteDef(32,0,16,16,1,1);
+      sprites["player"] = new SpriteDef(0,28,10,14);
+      sprites["decoration"] = new SpriteDef(0,0,10,14,2,1);
+      sprites["walls"] = new SpriteDef(40,14,10,14,1,1);
+      sprites["objects"] = new SpriteDef(0,28,10,14,2,1);
 
       fade = 0;
       fadeSpeed = 0.005;
       fadeCol = 0xff000000;
       camera = null;
+      
+      spriteDrawArray = new Array();
     }
 
     public function cls():void
     {      
-      drawRect(backBuffer.rect, clearColor);
+      drawRect(backBuffer.rect, clearColor);      
+    }
+    
+    private function sortOnLayer(a:SpriteDraw, b:SpriteDraw):int
+    {
+	    if(a.layer > b.layer) return 1;
+      else return -1;
     }
 
     public function flip():void
     {
-	  bitmap.bitmapData.fillRect( bitmap.bitmapData.rect, clearColor );
-	  bitmap.bitmapData.copyPixels(backBuffer, backBuffer.rect, new Point(0,0));
+      if(spriteDrawArray != null)
+      {
+        spriteDrawArray.sort(sortOnLayer);
+        for(var i:int = 0; i<spriteDrawArray.length; i++)
+          renderSpriteDraw(spriteDrawArray[i]);
+      }
+    
+      bitmap.bitmapData.fillRect( bitmap.bitmapData.rect, clearColor );
+      bitmap.bitmapData.copyPixels(backBuffer, backBuffer.rect, new Point(0,0));
 	  
-	  // TODO handle fill again
+      // TODO handle fill again
+      
+      spriteDrawArray = new Array();
     }
-
-    public function drawSprite(sprite:String, x:int, y:int,
-                                xFrame:int=0, yFrame:int=0):void
+    
+    public function renderSpriteDraw(spriteDraw:SpriteDraw):void
     {
+      var x:int = spriteDraw.x;
+      var y:int = spriteDraw.y;
       if(camera)
       {
         x -= camera.pos.x;
         y -= camera.pos.y;
       }
-      var spr:SpriteDef = getSpriteDef(sprite);
+      var spr:SpriteDef = getSpriteDef(spriteDraw.sprite);
       if(!spr) return;
-      backBuffer.copyPixels(spriteSheet, spr.getRect(xFrame, yFrame), new Point(x,y));
+      backBuffer.copyPixels(spriteSheet, spr.getRect(spriteDraw.xFrame, spriteDraw.yFrame), new Point(x,y));    
+    }
+
+    public function drawSprite(sprite:String, x:int, y:int, layer:Number=1000,
+                                xFrame:int=0, yFrame:int=0):void
+    {
+      spriteDrawArray.push(new SpriteDraw(sprite, x, y, xFrame, yFrame, layer));
     }
     
     public function getSpriteDef(sprite:String):SpriteDef

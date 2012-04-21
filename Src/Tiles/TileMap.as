@@ -14,8 +14,8 @@ package Src.Tiles
   {  
     private static const OBJ_START:int=0;
   
-    public static var tileWidth:int=16;
-    public static var tileHeight:int=16;
+    public static var tileWidth:int=10;
+    public static var tileHeight:int=10;
     
     private static var tileSpr:String="walls";
     private static var objSpr:String="objects";    
@@ -32,7 +32,7 @@ package Src.Tiles
     
     public function TileMap(game:Game)
     {
-      reset(30,10);
+      reset(7,7);
       this.game = game;
     }
     
@@ -70,15 +70,17 @@ package Src.Tiles
       }
     }
 
-    public function render():void
+    public function render(layerOffset:Number=0):void
     {
       for(var i:int=0; i<tiles.length; i++)
       {
         var y:int = i/width;
         var x:int = i-(y*width);
         var tile:Tile = getTile(x,y);
-        var spr:String = sprites[tile.t];  
-        game.renderer.drawSprite(spr, x*tileWidth, y*tileHeight, tile.xFrame, tile.yFrame);
+        var spr:String = sprites[tile.t];
+        var layer:Number = y*tileHeight+layerOffset;
+        if(tile.t != Tile.T_WALL) layer-=tileHeight;
+        game.renderer.drawSprite(spr, x*tileWidth, y*tileHeight, layer, tile.xFrame, tile.yFrame);
       }
     }
     

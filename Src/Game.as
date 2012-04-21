@@ -46,7 +46,7 @@ package Src
     public function Game()
     {	  
       entityManager = new EntityManager(this, 8);
-	  input = new Input(this);
+      input = new Input(this);
       renderer = new Renderer();	  
       soundManager = new SoundManager();
       tileMap = new TileMap(this);      
@@ -56,12 +56,12 @@ package Src
 
     public function init(w:int, h:int, pixelSize:int, targetFps:int, stage:Stage):void
     {
-	  this.stage = stage;	  
+      this.stage = stage;	  
 	  
-	  physTime = 1000.0/targetFps;
+      physTime = 1000.0/targetFps;
       renderer.init(w, h, pixelSize);
       soundManager.init();
-	  input.init();
+      input.init();
       tileEditor = new TileEditor(tileMap);
 
       gameState = STATE_GAME;
@@ -73,7 +73,7 @@ package Src
 
       resetEntities();
 	  
-	  stage.addEventListener(Event.ENTER_FRAME, enterFrame);
+      stage.addEventListener(Event.ENTER_FRAME, enterFrame);
     }
 
     private function update():void
@@ -121,10 +121,7 @@ package Src
       if(gameState == STATE_FE)
         frontEnd.render();
 		
-      renderer.drawFontText("Jonathan Whiting's Basecode",
-                            renderer.width/2, 10, true);
-
-      if(!IS_FINAL)
+      if(false && !IS_FINAL)
         renderer.backBuffer.draw(fpsText);
 	  
       renderer.flip();
@@ -136,7 +133,7 @@ package Src
       fps = (fps*9 + 1000/(thisTime-lastTime))/10;
       updateTracker += thisTime-lastTime;
       lastTime = thisTime;
-      if(fpsText)
+      if(false && fpsText)
         fpsText.text = "FPS: "+int(fps);
 
       while(updateTracker > 0)
