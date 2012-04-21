@@ -6,6 +6,7 @@ package Src.Entity
   import flash.ui.Keyboard;
   import flash.utils.Dictionary;
   import Src.Tiles.*;
+  import Src.*;
 
   public class Woman extends Entity
   {
@@ -62,6 +63,11 @@ package Src.Entity
         collider.speed.x /= 2;
       if(!game.input.upKey() && !game.input.downKey())
         collider.speed.y /= 2;
+        
+      if(game.input.keyDownDictionary[Input.KEY_SHIFT])
+        collider.collisionMask = 0;
+      else
+        collider.collisionMask = CCollider.COL_SOLID | CCollider.COL_NOPLAYER;
     }
     
     public function updateEntityCollision():void
@@ -114,6 +120,8 @@ package Src.Entity
     public override function update():void
     {
       collider.process();
+      if(collider.enclosed()) // check stuck
+        game.mapStore.decrement(); // this resets entities
       updateRun();      
       updateEntityCollision();
       updateAnim();

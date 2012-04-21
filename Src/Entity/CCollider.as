@@ -34,7 +34,7 @@ package Src.Entity
       clean();
     }
     
-    public function checkSide(side:int, pos:Point):int
+    public function checkSide(side:int):int
     {
       var horizontal:Boolean = (side % 2) != 0;
       var checkPos:Number;
@@ -81,15 +81,22 @@ package Src.Entity
     
       pos.x += speed.x/subMoves;
       side = speed.x < 0 ? 3 : 1;
-      collides[side] |= checkSide(side, pos);
+      collides[side] |= checkSide(side);
       if(collides[side] & collisionMask)
         pos.x -= speed.x/subMoves;
         
       pos.y += speed.y/subMoves;
       side = speed.y < 0 ? 0 : 2;
-      collides[side] |= checkSide(side, pos);
+      collides[side] |= checkSide(side);
       if(collides[side] & collisionMask)
         pos.y -= speed.y/subMoves;        
+    }
+    
+    public function enclosed():Boolean
+    {
+      for(var i:int=0; i<4; i++)
+        if(!checkSide(i)) return false;
+      return true;
     }
     
     public function intersects(other:CCollider):Boolean
