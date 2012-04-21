@@ -75,7 +75,6 @@ package Src.Entity
           if(collider.intersects(ma.collider))
           {
             game.mapStore.increment(); // this resets entities
-            game.entityManager.push(this); // re-add me
             return;
           }
         }
@@ -85,7 +84,6 @@ package Src.Entity
           if(collider.intersects(sl.collider))
           {
             game.mapStore.decrement(); // this resets entities
-            game.entityManager.push(this); // re-add me
             return;
           }
         }

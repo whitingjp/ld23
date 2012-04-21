@@ -78,7 +78,8 @@ package Src.Tiles
           switch(tiles[i].xFrame)
           {
             case OBJ_START:
-              game.entityManager.push(new Woman(p));
+              if(!game.entityManager.findEntityOfClass(Woman))
+                game.entityManager.push(new Woman(p));
               break;
             case OBJ_MAPADVANCER:
               game.entityManager.push(new MapAdvancer(p));

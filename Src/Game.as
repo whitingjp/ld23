@@ -137,9 +137,12 @@ package Src
       input.update(); 
     }
     
-    private function resetEntities():void
+    private function resetEntities(keepWoman:Boolean=false):void
     {
-      entityManager.reset();      
+      var woman:Woman = null;
+      if(keepWoman) woman = Woman(entityManager.findEntityOfClass(Woman));
+      entityManager.reset();    
+      if(woman) entityManager.push(woman);
       if(gameState == STATE_GAME)
         tileMap.spawnEntities();
       tileMap.copyToRenderTileMap(renderTileMap);
@@ -206,7 +209,7 @@ package Src
       this.tileMap.copyToRenderTileMap(renderTileMap);
       if(tileEditor)
         tileEditor.tileMap = this.tileMap;
-      resetEntities();
+      resetEntities(true);
       transition = 0;
     }
   }
