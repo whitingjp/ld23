@@ -33,7 +33,7 @@ package Src.Tiles
     
     public function TileMap(game:Game)
     {
-      reset(7,7);
+      reset(9,9);
       this.game = game;
     }
     
@@ -48,8 +48,20 @@ package Src.Tiles
       sprites[Tile.T_ENTITY] = "objects";
       
       tiles = new Array();
-      for(var i:int=0; i<width*height; i++)
+      var i:int;
+      for(i=0; i<width*height; i++)
           tiles.push(new Tile());
+          
+      for(i=0; i<width; i++)
+      {
+        tiles[getIndex(i,0)].t = Tile.T_WALL;
+        tiles[getIndex(i,height-1)].t = Tile.T_WALL;
+      }
+      for(i=0; i<height; i++)
+      {
+        tiles[getIndex(0,i)].t = Tile.T_WALL;
+        tiles[getIndex(width-1,i)].t = Tile.T_WALL;
+      }      
     }
     
     public function spawnEntities():void

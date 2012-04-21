@@ -15,7 +15,7 @@ package {
 		
 		private function onAddedToStage( pEvent : Event ) : void
 		{
-			game.init( 70, 70, 7, 60, stage);
+			game.init( 90, 90, 6, 60, stage);
 			addChild(game.renderer.bitmap);
 		}
 	}
