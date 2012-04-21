@@ -13,6 +13,8 @@ package Src.Entity
     public var pieces:Array;
     public var dir:int;
     public var timer:int=0;
+    public var health:int=14;
+    
     public function Snake(pos:Point)
     {
       pieces = new Array();
@@ -21,9 +23,49 @@ package Src.Entity
       {
         var col:CCollider = new CCollider(this);
         col.pos = pos.clone();
-        col.rect = new Rectangle(1,1,6,6);
+        col.rect = new Rectangle(2,6,6,6);
         col.speed = new Point(0,0);
         pieces.push(col);
+      }
+    }
+    
+    public function updateHurt():void
+    {
+      for(var i:int = 0; i<game.entityManager.entities.length; i++)
+      {
+        var e:Entity = game.entityManager.entities[i];
+        for(var j:int = 0; j<pieces.length; j++)
+        {          
+          if(e is Woman)
+          {
+            if(pieces[j].intersects(Woman(e).collider))
+            {
+              game.mapStore.decrement();
+              return;
+            }
+          }
+        }
+        
+        if(e is Destroyer)
+        {
+          if(pieces[pieces.length-1].intersects(Destroyer(e).collider))
+          {
+            // hurt
+            health--;
+            e.alive = false;
+            if(health)
+            {
+              var xp:int = Math.random()*4+2;
+              var yp:int = Math.random()*4+2;
+              var pos:Point = new Point(xp*10, yp*10);
+              game.entityManager.push(new Destroyer(pos));
+            } else
+            {
+              game.mapStore.increment();
+              return;
+            }
+          }
+        }
       }
     }
     
@@ -43,12 +85,15 @@ package Src.Entity
           var distance:Number = Math.sqrt(diff.x*diff.x+diff.y*diff.y);
           diff.x /= distance;
           diff.y /= distance;        
-          col.pos.x = head.pos.x-diff.x*4;
-          col.pos.y = head.pos.y-diff.y*4;
+          var speed:Number = (1-(health/7.0))*1.5+3;
+          col.pos.x = head.pos.x-diff.x*speed;
+          col.pos.y = head.pos.y-diff.y*speed;
         }
         pieces.push(col);
       }      
       timer--;
+      
+      updateHurt();
     }
     
     public override function render():void

@@ -49,7 +49,7 @@ package Src
     public static var TRANSITION_SPEED:Number = 0.15;
     public var transition:Number;
     
-    [Embed(source="../level/snake.lev", mimeType="application/octet-stream")]
+    [Embed(source="../level/level.lev", mimeType="application/octet-stream")]
 		public static const Level: Class;	
 
     public function Game()
