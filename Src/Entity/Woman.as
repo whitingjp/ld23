@@ -29,7 +29,7 @@ package Src.Entity
       sprite.xframe = 4;
       collider.pos = new Point(0,0);
       collider.speed = new Point(0,0);
-      collider.rect = new Rectangle(0,6,8,4);
+      collider.rect = new Rectangle(0,5,8,6);
       walkAnim = 0;
     }
 
@@ -84,14 +84,13 @@ package Src.Entity
             return;
           }
         }
-        if(e is Slug)
+        var c:CCollider = null;
+        if(e is Destroyer) c = Destroyer(e).collider;
+        if(e is Slug) c = Slug(e).collider;
+        if(c && collider.intersects(c))
         {
-          var sl:Slug = Slug(e);
-          if(collider.intersects(sl.collider))
-          {
-            game.mapStore.decrement(); // this resets entities
-            return;
-          }
+          game.mapStore.decrement(); // this resets entities
+          return;
         }
       }
     }

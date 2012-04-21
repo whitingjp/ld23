@@ -28,7 +28,7 @@ package Src.Entity
       sprite.xframe = 0;
       collider.pos = new Point(0,0);
       collider.speed = new Point(0,0);
-      collider.rect = new Rectangle(0,6,9,4);
+      collider.rect = new Rectangle(0,4,9,8);
     }
     
     public function updateMove():void

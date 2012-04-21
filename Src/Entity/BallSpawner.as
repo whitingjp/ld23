@@ -28,7 +28,7 @@ package Src.Entity
     public override function update():void
     {
       if(!game.entityManager.findEntityOfClass(Ball))
-        game.entityManager.push(new Ball(collider.pos));
+        game.entityManager.push(new Ball(collider.pos.clone()));
     }
   }
 }
