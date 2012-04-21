@@ -59,7 +59,7 @@ package Src.Gfx
       sprites["player"] = new SpriteDef(0,42,10,14,8,2);
       sprites["decoration"] = new SpriteDef(0,0,10,14,2,1);
       sprites["walls"] = new SpriteDef(0,14,10,14,3,1);
-      sprites["objects"] = new SpriteDef(0,28,10,14,5,1);
+      sprites["objects"] = new SpriteDef(0,28,10,14,7,1);
       sprites["mapadvancer"] = new SpriteDef(10,28,10,14);
       sprites["marker"] = new SpriteDef(63,0,1,1);
       sprites["walltransition"] = new SpriteDef(0,84,10,14,5,3);
@@ -68,6 +68,7 @@ package Src.Gfx
       sprites["nonplayer"] = new SpriteDef(40,98,10,14,2);
       sprites["slug"] = new SpriteDef(0,70,10,14,2);
       sprites["destroyer"] = new SpriteDef(20,70,10,14,2);
+      sprites["bigslug"] = new SpriteDef(60,70,30,18,2);
 
       fade = 0;
       fadeSpeed = 0.005;
@@ -105,6 +106,13 @@ package Src.Gfx
       spriteDrawArray = new Array();
     }
     
+    public function doActualSpriteDraw(buffer:BitmapData, sprite:String, x:int, y:int, xFrame:int=0, yFrame:int=0):void
+    {
+      var spr:SpriteDef = getSpriteDef(sprite);
+      if(!spr) return;
+      buffer.copyPixels(spriteSheet, spr.getRect(xFrame, yFrame), new Point(x,y));
+    }
+    
     public function renderSpriteDraw(spriteDraw:SpriteDraw):void
     {
       var x:int = spriteDraw.x;
@@ -114,15 +122,21 @@ package Src.Gfx
         x -= camera.pos.x;
         y -= camera.pos.y;
       }
-      var spr:SpriteDef = getSpriteDef(spriteDraw.sprite);
-      if(!spr) return;
-      backBuffer.copyPixels(spriteSheet, spr.getRect(spriteDraw.xFrame, spriteDraw.yFrame), new Point(x,y));    
+      if(spriteDraw.bitmapData)
+        backBuffer.copyPixels(spriteDraw.bitmapData, spriteDraw.bitmapData.rect, new Point(x,y));
+      else
+        doActualSpriteDraw(backBuffer, spriteDraw.sprite, spriteDraw.x, spriteDraw.y, spriteDraw.xFrame, spriteDraw.yFrame);
     }
 
     public function drawSprite(sprite:String, x:int, y:int, layer:Number=1000,
                                 xFrame:int=0, yFrame:int=0):void
     {
       spriteDrawArray.push(new SpriteDraw(sprite, x, y, xFrame, yFrame, layer));
+    }
+    
+    public function drawGraphic(bitmapData:BitmapData, x:int, y:int, layer:Number=1000):void
+    {
+      spriteDrawArray.push(new SpriteDraw("", x, y, 0, 0, layer, bitmapData));
     }
     
     public function getSpriteDef(sprite:String):SpriteDef

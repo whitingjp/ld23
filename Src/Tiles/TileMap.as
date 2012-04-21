@@ -17,6 +17,7 @@ package Src.Tiles
     private static const OBJ_BALL:int=2;
     private static const OBJ_SLUG:int=3;
     private static const OBJ_DESTROYER:int=4;
+    private static const OBJ_BIGSLUG:int=5;
   
     public static var tileWidth:int=10;
     public static var tileHeight:int=10;
@@ -93,6 +94,9 @@ package Src.Tiles
               break;
             case OBJ_DESTROYER:
               game.entityManager.push(new Destroyer(p));
+              break;
+            case OBJ_BIGSLUG:
+              game.entityManager.push(new BigSlug(p));
               break;
           }
         }
