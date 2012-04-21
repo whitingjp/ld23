@@ -85,7 +85,7 @@ package Src.Tiles
               game.entityManager.push(new MapAdvancer(p));
               break;
             case OBJ_BALL:
-              game.entityManager.push(new Ball(p));
+              game.entityManager.push(new BallSpawner(p));
               break;
             case OBJ_SLUG:
               game.entityManager.push(new Slug(p));
