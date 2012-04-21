@@ -6,6 +6,7 @@ package Src.Entity
   import flash.ui.Keyboard;
   import flash.utils.Dictionary;
   import Src.Tiles.*;
+  import Src.*;
 
   public class Ball extends Entity
   {
@@ -24,7 +25,7 @@ package Src.Entity
 
     public function reset():void
     {
-      sprite.frame = 0;
+      sprite.xframe = 0;
       collider.pos = new Point(0,0);
       collider.speed = new Point(0,0);
       collider.rect = new Rectangle(0,6,9,4);

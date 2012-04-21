@@ -22,7 +22,7 @@ package Src.Entity
 
     public function reset():void
     {
-      sprite.frame = 0;
+      sprite.xframe = 0;
       collider.pos = new Point(0,0);
       collider.speed = new Point(0,0);
       collider.rect = new Rectangle(3,7,4,4);

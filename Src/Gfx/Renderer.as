@@ -56,7 +56,7 @@ package Src.Gfx
                                     height*pixelSize, false);
 
       sprites = new Object();
-      sprites["player"] = new SpriteDef(0,28,10,14);
+      sprites["player"] = new SpriteDef(0,42,10,14,8,2);
       sprites["decoration"] = new SpriteDef(0,0,10,14,2,1);
       sprites["walls"] = new SpriteDef(40,14,10,14,1,1);
       sprites["objects"] = new SpriteDef(0,28,10,14,3,1);
