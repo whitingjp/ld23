@@ -28,7 +28,7 @@ package Src.Entity
       sprite.xframe = 0;
       collider.pos = new Point(0,0);
       collider.speed = new Point(0,0);
-      collider.rect = new Rectangle(-2,-2,14,14);
+      collider.rect = new Rectangle(-1,-1,11,11);
     }
 
     public override function update():void
