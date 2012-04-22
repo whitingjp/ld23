@@ -17,7 +17,8 @@ package Src.Entity
       sprite = new CSprite(this, "mapadvancer");
       collider = new CCollider(this);
       reset();
-      collider.pos = pos;      
+      collider.pos = pos;
+      collider.pos.y += 4;      
     }
 
     public function reset():void

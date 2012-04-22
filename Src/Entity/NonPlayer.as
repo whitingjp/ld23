@@ -21,6 +21,7 @@ package Src.Entity
       collider = new CCollider(this);
       reset();
       collider.pos = pos;
+      collider.pos.y+=4;
       allActive = false;
     }
 
