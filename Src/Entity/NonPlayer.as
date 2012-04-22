@@ -33,6 +33,7 @@ package Src.Entity
 
     public override function update():void
     {
+      var oldAllActive:Boolean = allActive;
       allActive = true;
       for(var i:int = 0; i<game.entityManager.entities.length; i++)
       {
@@ -43,7 +44,9 @@ package Src.Entity
           allActive = false;
         if(e is Spinner)
           allActive = false;
-      }      
+      }
+      if(allActive && !oldAllActive)
+        game.soundManager.playSound("unlocknoplayer");
     }
     
     public override function render():void

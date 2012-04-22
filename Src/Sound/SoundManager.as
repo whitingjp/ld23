@@ -32,13 +32,22 @@ package Src.Sound
     {
       var synth:SfxrSynth = new SfxrSynth();
       synth.setSettingsString(settings);
-      synth.cacheMutations(5);
+      synth.cacheMutations(5,0.01);
       sounds[name] = synth;
     }
 
     public function init():void
     {
-      addSynth("test", "1,,0.073,,0.339,0.253,,0.38,-0.043,,,0.001,,,,0.561,-0.048,-0.039,1,-0.032,0.045,,-0.005,0.5");
+      addSynth("increment", "0,,0.0156,0.367,0.2655,0.49,,,,,,0.5659,0.6049,,,,,,1,,,,,0.7");
+      addSynth("decrement", "3,,0.0168,0.06,0.41,0.26,,-0.56,,,,,,,,,,,1,,,0.0497,,0.9");
+      addSynth("bounceball", "0,,0.0843,,0.0956,0.33,,-0.54,,,,,,0.0674,,,,,1,,,0.0947,,0.7");
+      addSynth("hitmonster", "3,,0.2,0.48,0.16,0.1608,,-0.4599,,,,,,,,,,,1,,,,,0.7");
+      addSynth("unlocknoplayer", "1,,0.1654,,0.43,0.38,,0.1999,0.02,,,,,,,0.5851,,,1,,,,,0.7");
+      addSynth("hittarget", "0,,0.0945,0.5721,0.2584,0.4887,,,,,,0.2521,0.6212,,,,,,1,,,,,0.7");
+      addSynth("bossappear", "0,,0.36,0.3,0.62,0.4387,,-0.36,-0.78,,,,,0.1774,,0.6459,,,1,,,,,0.7");
+      addSynth("ballpickup", "0,,0.0267,,0.18,0.29,,0.1999,,,,,,0.0957,,0.4438,,,1,,,,,0.7");
+      addSynth("spinnerwall", "0,,0.0569,0.41,0.123,0.36,,,,,,,,,,,,,1,,,,,0.7");
+      addSynth("destroy", "3,,0.21,0.3811,0.35,0.52,,0.1999,,,,,,,,,0.5831,-0.0469,1,,,,,0.7");
 
       // Do music
       musicSounds['theme'] = new mp3Theme() as SoundAsset;
@@ -76,7 +85,7 @@ package Src.Sound
 
       stopMusic();
       channel = musicSounds[currentTrack].play();
-      setVol(0.5);
+      setVol(0.4);
       channel.addEventListener(Event.SOUND_COMPLETE, soundCompleteHandler);
     }
 

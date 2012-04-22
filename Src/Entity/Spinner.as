@@ -41,6 +41,7 @@ package Src.Entity
       if(collider.collides[dir] & collider.collisionMask)
       {
         dir = (dir+1)%4;
+        game.soundManager.playSound("spinnerwall");
       }
       switch(dir)
       {

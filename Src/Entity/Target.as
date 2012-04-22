@@ -44,7 +44,11 @@ package Src.Entity
         if(c)
         {
           if(collider.intersects(c))
+          {
+            if(activeTimer == 0)
+              game.soundManager.playSound("hittarget");
             activeTimer = ACTIVE_TIME;
+          }
         }
         if(e is Target)
         {

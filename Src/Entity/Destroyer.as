@@ -39,7 +39,10 @@ package Src.Entity
         if(e is Ball) c = Ball(e).collider;
         if(e is Slug) c = Slug(e).collider;
         if(c && collider.intersects(c))
+        {
           e.alive = false;
+          game.soundManager.playSound("destroy");
+        }
       }
       anim += 0.05;
       if(anim > 1) anim--;

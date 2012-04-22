@@ -18,6 +18,7 @@ package Src.Entity
     public var renderOff:Point;
     public var health:Number;
     public var hurtTimer:Number;
+    public var announced:Boolean = false;
 
     public function BigSlug(pos:Point)
     {      
@@ -36,10 +37,13 @@ package Src.Entity
       renderOff = new Point(0,0);
       health = 1;
       hurtTimer = 0;
+      
     }
     
     public function hurt():void
     {
+      game.soundManager.playSound("bounceball");
+      game.soundManager.playSound("hitmonster");
       if(hurtTimer <= 0)
       {
         health -= 0.05;
@@ -84,6 +88,12 @@ package Src.Entity
 
     public override function update():void
     {
+      if(!announced)
+      {
+        game.soundManager.playSound("bossappear");
+        announced = true;
+      }
+    
       if(hurtTimer > 0)
         hurtTimer -= 0.04;
     

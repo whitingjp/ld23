@@ -36,12 +36,14 @@ package Src.Tiles
       if(current == tileMaps.length-1)
         tileMaps.push(new TileMap(game));
       current++;
+      game.soundManager.playSound("increment");
     }
     
     public function decrement():void
     {
       if(current > 0)
         current--;
+      game.soundManager.playSound("decrement");
     }
     
     public function serialise(byteArray:ByteArray):void

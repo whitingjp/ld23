@@ -13,6 +13,7 @@ package Src.Entity
     public var collider:CCollider;
     public var sprite:CSprite;
     public var moving:Boolean;
+    public var grabbedTimer:int;
 
     public function Ball(pos:Point)
     {      
@@ -29,6 +30,7 @@ package Src.Entity
       collider.pos = new Point(0,0);
       collider.speed = new Point(0,0);
       collider.rect = new Rectangle(0,4,9,8);
+      grabbedTimer = 0;
     }
     
     public function updateMove():void
@@ -45,6 +47,9 @@ package Src.Entity
             collider.speed.y *= 0.5;
             collider.speed.x += woman.collider.speed.x;
             collider.speed.y += woman.collider.speed.y;
+            if(grabbedTimer == 0)
+              game.soundManager.playSound("ballpickup");
+            grabbedTimer = 30;
           }
         }
         if(e is Slug)
@@ -55,6 +60,8 @@ package Src.Entity
             collider.speed.x *= -1;
             collider.speed.y *= -1;
             slug.alive = false;
+            game.soundManager.playSound("bounceball");
+            game.soundManager.playSound("hitmonster");
           }
         }
         if(e is Spinner)
@@ -64,6 +71,8 @@ package Src.Entity
             collider.speed.x *= -1;
             collider.speed.y *= -1;
             e.alive = false;
+            game.soundManager.playSound("bounceball");
+            game.soundManager.playSound("hitmonster");
           }
         }
         if(e is BigSlug)
@@ -73,14 +82,26 @@ package Src.Entity
           {
             collider.speed.y += 0.05;
             bigslug.hurt();
-          }
+          }          
         }
       }
     }
     
+    public function updateBounce():void
+    {
+      var bounced:Boolean=false
+      for(var i:int=0; i<4; i++)
+        if(collider.collides[i] & collider.collisionMask)
+          game.soundManager.playSound("bounceball");
+    }
+    
     public override function update():void
     {
+      if(grabbedTimer) grabbedTimer--;
+    
       collider.process();
+      
+      updateBounce();
       if(collider.enclosed()) // check stuck
         alive = false;
       updateMove();

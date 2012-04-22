@@ -14,6 +14,7 @@ package Src.Entity
     public var dir:int;
     public var timer:int=0;
     public var health:int=14;
+    public var announced:Boolean=false;
     
     public function Snake(pos:Point)
     {
@@ -51,6 +52,7 @@ package Src.Entity
           if(pieces[pieces.length-1].intersects(Destroyer(e).collider))
           {
             // hurt
+            game.soundManager.playSound("hitmonster");
             health--;
             e.alive = false;
             if(health)
@@ -71,6 +73,12 @@ package Src.Entity
     
     public override function update():void
     {
+      if(!announced)
+      {
+        game.soundManager.playSound("bossappear");
+        announced = true;
+      }
+    
       if(!timer)
       {
         timer = 10;
