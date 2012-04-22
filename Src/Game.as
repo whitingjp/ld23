@@ -32,7 +32,7 @@ package Src
     private var updateTracker:Number = 0;
 	private var physTime:Number;
 
-    private var gameState:int = STATE_GAME;
+    private var gameState:int = STATE_FE;
 
     public var entityManager:EntityManager;
     public var input:Input;
@@ -80,8 +80,8 @@ package Src
       input.init();
       tileEditor = new TileEditor(tileMap);
 
-      gameState = STATE_GAME;
-      frontEnd.addScreen(new MainMenu());
+      gameState = STATE_FE;
+      frontEnd.addScreen(new Splash());
 
       fpsText = new TextField();
       fpsText.textColor = 0xffffffff;
@@ -116,7 +116,8 @@ package Src
     {
       camera.update();
       renderer.update();
-      entityManager.update();
+      if(gameState != STATE_FE)
+        entityManager.update();
       if(gameState == STATE_FE)
         frontEnd.update();
       if(gameState == STATE_EDITING)
@@ -137,7 +138,7 @@ package Src
       input.update(); 
     }
     
-    private function resetEntities(persist:Boolean=false):void
+    public function resetEntities(persist:Boolean=false):void
     {
       var newManager:EntityManager = new EntityManager(this, 8);
       var i:int;
@@ -174,9 +175,10 @@ package Src
       renderer.setCamera(camera);
       if(gameState == STATE_EDITING)
         tileMap.render();
-      else
+      else if(gameState == STATE_GAME)
         renderTileMap.render(0,transition,oldRenderTileMap);
-      entityManager.render();
+      if(gameState != STATE_FE)
+        entityManager.render();
       renderer.setCamera();
       if(gameState == STATE_EDITING)
         tileEditor.render();      

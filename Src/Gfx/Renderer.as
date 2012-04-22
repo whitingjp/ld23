@@ -75,6 +75,7 @@ package Src.Gfx
       sprites["bigshadow"] = new SpriteDef(80,70,30,18,1);
       sprites["particle"] = new SpriteDef(70,98,2,2,4,3);
       sprites["bigparticle"] = new SpriteDef(80,98,5,5,1,1);
+      sprites["pressakey"] = new SpriteDef(70,112,54,5,1,1);
 
       fade = 0;
       fadeSpeed = 0.005;
@@ -86,7 +87,7 @@ package Src.Gfx
 
     public function cls():void
     {      
-      drawRect(backBuffer.rect, clearColor);      
+      drawRect(backBuffer.rect, clearColor);
     }
     
     private function sortOnLayer(a:SpriteDraw, b:SpriteDraw):int
@@ -96,14 +97,14 @@ package Src.Gfx
     }
 
     public function flip():void
-    {
+    {      
       if(spriteDrawArray != null)
       {
         spriteDrawArray.sort(sortOnLayer);
         for(var i:int = 0; i<spriteDrawArray.length; i++)
           renderSpriteDraw(spriteDrawArray[i]);
       }
-    
+      
       bitmap.bitmapData.fillRect( bitmap.bitmapData.rect, clearColor );
       bitmap.bitmapData.copyPixels(backBuffer, backBuffer.rect, new Point(0,0));
 	  

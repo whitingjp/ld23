@@ -17,6 +17,7 @@ package Src
     public var mousePressed:Boolean;
     public var keyDownDictionary:Dictionary;
     public var keyPressedDictionary:Dictionary;
+    public var anyKey:Boolean;
 
     public function Input(game:Game)
     {
@@ -41,6 +42,7 @@ package Src
     {
       mousePressed = false;
       keyPressedDictionary = new Dictionary();
+      anyKey = false;
     }
 
     public function keyUp(event:KeyboardEvent):void
@@ -53,6 +55,7 @@ package Src
     {
       keyDownDictionary[event.keyCode] = true;
       keyPressedDictionary[event.keyCode] = true;
+      anyKey = true;
     }
 
     public function mouseMove(event:MouseEvent):void
