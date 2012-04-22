@@ -40,7 +40,8 @@ package Src.Tiles
     
     public function decrement():void
     {
-      if(current > 0) current--;
+      if(current > 0)
+        current--;
     }
     
     public function serialise(byteArray:ByteArray):void

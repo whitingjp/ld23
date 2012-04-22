@@ -78,7 +78,7 @@ package Src.Entity
         if(e is MapAdvancer)
         {
           var ma:MapAdvancer = MapAdvancer(e);
-          if(collider.intersects(ma.collider))
+          if(collider.intersects(ma.collider) && game.transition == 1)
           {
             game.mapStore.increment(); // this resets entities
             return;
@@ -87,7 +87,7 @@ package Src.Entity
         var c:CCollider = null;
         if(e is Destroyer) c = Destroyer(e).collider;
         if(e is Slug) c = Slug(e).collider;
-        if(c && collider.intersects(c))
+        if(c && collider.intersects(c) && game.transition == 1)
         {
           game.mapStore.decrement(); // this resets entities
           return;
