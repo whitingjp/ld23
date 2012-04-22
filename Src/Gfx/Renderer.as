@@ -76,6 +76,9 @@ package Src.Gfx
       sprites["particle"] = new SpriteDef(70,98,2,2,4,3);
       sprites["bigparticle"] = new SpriteDef(80,98,5,5,1,1);
       sprites["pressakey"] = new SpriteDef(70,112,54,5,1,1);
+      sprites["youwin"] = new SpriteDef(80,56,48,11,1,1);
+      sprites["font_regular"] = new SpriteDef(0,128,5,8,27,1);
+      sprites["credit_bosses"] = new SpriteDef(0,140,30,20,2);
 
       fade = 0;
       fadeSpeed = 0.005;
@@ -166,15 +169,17 @@ package Src.Gfx
       backBuffer.fillRect(rect, fillCol);
     }
 
-    public function drawSpriteText(str:String, x:int, y:int):void
+    public function drawSpriteText(str:String, x:int, y:int, center:Boolean=true):void
     {
+      if(center)
+        x-=(str.length*5)/2
       if(camera)
       {
         x -= camera.pos.x;
         y -= camera.pos.y;
       }
       // If I want to use this I'll have to draw a font!
-      /*str = str.toUpperCase();
+      str = str.toUpperCase();
       var i:int;
       for(i=0; i<str.length; i++)
       {
@@ -197,9 +202,9 @@ package Src.Gfx
           frame = charCode-58+15;
         }
         if(frame != -1)
-          drawSprite(sprite, x, y, frame);
-        x += 8;
-      }*/
+          drawSprite(sprite, x, y, 1000, frame);
+        x += 5;
+      }
     }
 
     public function drawFontText(str:String, x:int, y:int,
