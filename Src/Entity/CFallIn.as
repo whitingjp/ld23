@@ -11,13 +11,15 @@ package Src.Entity
   {
     private var sprite:CSprite
     private var dest:Point;
+    private var shadowSprite:String;
     
     public var timer:int=20;
     
-    public function CFallIn(sprite:CSprite, dest:Point)
+    public function CFallIn(sprite:CSprite, dest:Point, shadowSprite:String="shadow")
     {
       this.sprite = sprite;
       this.dest = dest;
+      this.shadowSprite = shadowSprite;
       timer = 15+Math.random()*10;
     }
     
@@ -32,7 +34,7 @@ package Src.Entity
       var progress:Number = Number(timer)/20;
       renderPos.y -= 90*progress;
       sprite.render(renderPos, 100);
-      sprite.e.game.renderer.drawSprite("shadow", dest.x, dest.y, dest.y);
+      sprite.e.game.renderer.drawSprite(shadowSprite, dest.x, dest.y, dest.y);
     }
     
     public function isDone():Boolean

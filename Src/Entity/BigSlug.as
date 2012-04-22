@@ -11,6 +11,7 @@ package Src.Entity
   public class BigSlug extends Entity
   {
     public var collider:CCollider;
+    public var fallIn:CFallIn;
     public var srcBitmap:BitmapData=null;
     public var eyeBitmap:BitmapData=null;
     public var dstBitmap:BitmapData;
@@ -25,7 +26,9 @@ package Src.Entity
       collider = new CCollider(this);
       reset();
       collider.pos = pos;      
-      dstBitmap = new BitmapData(40,30,true,0x00000000);      
+      dstBitmap = new BitmapData(40,30,true,0x00000000);
+      var sprite:CSprite = new CSprite(this, "bigslug")
+      fallIn = new CFallIn(sprite, pos, "bigshadow");
     }
 
     public function reset():void
@@ -88,6 +91,12 @@ package Src.Entity
 
     public override function update():void
     {
+      if(!fallIn.isDone())
+      {
+        fallIn.update();
+        return;
+      }
+    
       if(!announced)
       {
         game.soundManager.playSound("bossappear");
@@ -109,7 +118,10 @@ package Src.Entity
     
     public override function render():void
     {
-      game.renderer.drawGraphic(dstBitmap, collider.pos.x-renderOff.x, collider.pos.y-renderOff.y, collider.pos.y+6);
+      if(!fallIn.isDone())
+        fallIn.render();
+      else
+        game.renderer.drawGraphic(dstBitmap, collider.pos.x-renderOff.x, collider.pos.y-renderOff.y, collider.pos.y+6);
     }
   }
 }
