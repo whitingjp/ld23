@@ -12,13 +12,16 @@ package Src.Entity
   {
     public var collider:CCollider;
     public var sprite:CSprite;
+    public var fallIn:CFallIn;
     public var moving:Boolean;
     public var grabbedTimer:int;
+    
 
     public function Ball(pos:Point)
     {      
       sprite = new CSprite(this, "ball");
       collider = new CCollider(this);
+      fallIn = new CFallIn(sprite, pos);
       collider.elasticity = 0.7;
       reset();
       collider.pos = pos;
@@ -97,6 +100,12 @@ package Src.Entity
     
     public override function update():void
     {
+      if(!fallIn.isDone())
+      {
+        fallIn.update();
+        return;
+      }
+    
       if(grabbedTimer) grabbedTimer--;
     
       collider.process();
@@ -115,7 +124,10 @@ package Src.Entity
 
     public override function render():void
     {
-      sprite.render(collider.pos);
+      if(!fallIn.isDone())
+        fallIn.render();
+      else
+        sprite.render(collider.pos);
     }    
   }
 }

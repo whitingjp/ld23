@@ -11,6 +11,7 @@ package Src.Entity
   {
     public var collider:CCollider;
     public var sprite:CSprite;
+    public var fallIn:CFallIn;
     
     public static const SPEED:Number = 1;
     
@@ -20,8 +21,9 @@ package Src.Entity
     public function Spinner(pos:Point)
     {
       sprite = new CSprite(this, "spinner");
-      collider = new CCollider(this);
+      collider = new CCollider(this);      
       collider.collisionMask = CCollider.COL_SOLID;
+      fallIn = new CFallIn(sprite, pos);
       reset();
       collider.pos = pos;
       dir = 1;
@@ -57,6 +59,12 @@ package Src.Entity
 
     public override function update():void
     {
+      if(!fallIn.isDone())
+      {
+        fallIn.update();
+        return;
+      }
+    
       collider.process();
       if(collider.enclosed()) // check stuck
         alive = false;
@@ -71,7 +79,10 @@ package Src.Entity
     
     public override function render():void
     {
-      sprite.render(collider.pos);
+      if(!fallIn.isDone())
+        fallIn.render();
+      else
+        sprite.render(collider.pos);
     }
   }
 }

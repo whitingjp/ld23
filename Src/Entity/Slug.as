@@ -11,6 +11,7 @@ package Src.Entity
   {
     public var collider:CCollider;
     public var sprite:CSprite;
+    public var fallIn:CFallIn;
     
     public var walkAnim:Number;
 
@@ -18,6 +19,7 @@ package Src.Entity
     {      
       sprite = new CSprite(this, "slug");
       collider = new CCollider(this);
+      fallIn = new CFallIn(sprite, pos);
       collider.collisionMask = CCollider.COL_SOLID;
       reset();
       collider.pos = pos;      
@@ -54,6 +56,12 @@ package Src.Entity
 
     public override function update():void
     {
+      if(!fallIn.isDone())
+      {
+        fallIn.update();
+        return;
+      }
+    
       collider.process();
       updateRun();      
       collider.clean();
@@ -66,7 +74,10 @@ package Src.Entity
     
     public override function render():void
     {
-      sprite.render(collider.pos);
+      if(!fallIn.isDone())
+        fallIn.render();
+      else
+        sprite.render(collider.pos);
     }
   }
 }

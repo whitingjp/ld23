@@ -11,11 +11,13 @@ package Src.Entity
   {
     public var collider:CCollider;
     public var sprite:CSprite;
+    public var fallIn:CFallIn;
 
     public function MapAdvancer(pos:Point)
     {
       sprite = new CSprite(this, "mapadvancer");
       collider = new CCollider(this);
+      fallIn = new CFallIn(sprite, pos);
       reset();
       collider.pos = pos;
       collider.pos.y += 4;      
@@ -29,9 +31,17 @@ package Src.Entity
       collider.rect = new Rectangle(3,7,4,4);
     }
     
+    public override function update():void
+    {
+      fallIn.update();
+    }
+    
     public override function render():void
     {
-      sprite.render(collider.pos, -9);
+      if(!fallIn.isDone())
+        fallIn.render();
+      else
+        sprite.render(collider.pos, -9);
     }
   }
 }

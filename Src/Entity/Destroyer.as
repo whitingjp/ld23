@@ -11,6 +11,7 @@ package Src.Entity
   {
     public var collider:CCollider;
     public var sprite:CSprite;
+    public var fallIn:CFallIn;
     
     public var anim:Number=0;
     
@@ -18,6 +19,7 @@ package Src.Entity
     {
       sprite = new CSprite(this, "destroyer");
       collider = new CCollider(this);
+      fallIn = new CFallIn(sprite, pos);
       reset();
       collider.pos = pos;
       collider.pos.y+=4;
@@ -32,6 +34,12 @@ package Src.Entity
     
     public override function update():void
     {
+      if(!fallIn.isDone())
+      {
+        fallIn.update();
+        return;
+      }
+    
       for(var i:int = 0; i<game.entityManager.entities.length; i++)
       {
         var e:Entity = game.entityManager.entities[i];
@@ -51,7 +59,10 @@ package Src.Entity
     
     public override function render():void
     {
-      sprite.render(collider.pos);
+      if(!fallIn.isDone())
+        fallIn.render();
+      else
+        sprite.render(collider.pos);
     }    
   }
 }
