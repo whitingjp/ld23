@@ -41,6 +41,8 @@ package Src.Entity
           if(!Target(e).activeTimer) allActive = false;
         if(e is Slug)
           allActive = false;
+        if(e is Spinner)
+          allActive = false;
       }      
     }
     

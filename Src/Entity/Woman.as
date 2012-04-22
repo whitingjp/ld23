@@ -87,6 +87,7 @@ package Src.Entity
         var c:CCollider = null;
         if(e is Destroyer) c = Destroyer(e).collider;
         if(e is Slug) c = Slug(e).collider;
+        if(e is Spinner) c = Spinner(e).collider;
         if(c && collider.intersects(c) && game.transition == 1)
         {
           game.mapStore.decrement(); // this resets entities

@@ -38,7 +38,7 @@ package Src.Entity
 
     public function updateRun():void
     {
-      if(collider.collides[dir])
+      if(collider.collides[dir] & collider.collisionMask)
       {
         dir = (dir+1)%4;
       }
@@ -57,6 +57,8 @@ package Src.Entity
     public override function update():void
     {
       collider.process();
+      if(collider.enclosed()) // check stuck
+        alive = false;
       updateRun();      
       collider.clean();
     }    

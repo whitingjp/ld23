@@ -57,6 +57,15 @@ package Src.Entity
             slug.alive = false;
           }
         }
+        if(e is Spinner)
+        {
+          if(collider.intersects(Spinner(e).collider))
+          {
+            collider.speed.x *= -1;
+            collider.speed.y *= -1;
+            e.alive = false;
+          }
+        }
         if(e is BigSlug)
         {
           var bigslug:BigSlug = BigSlug(e);
@@ -65,7 +74,7 @@ package Src.Entity
             collider.speed.y += 0.05;
             bigslug.hurt();
           }
-        }        
+        }
       }
     }
     
