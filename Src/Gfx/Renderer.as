@@ -73,7 +73,7 @@ package Src.Gfx
       sprites["spinner"] = new SpriteDef(40,70,10,14,2);
       sprites["shadow"] = new SpriteDef(70,70,10,14,1);
       sprites["bigshadow"] = new SpriteDef(80,70,30,18,1);
-      sprites["particle"] = new SpriteDef(70,98,2,2,4,2);
+      sprites["particle"] = new SpriteDef(70,98,2,2,4,3);
 
       fade = 0;
       fadeSpeed = 0.005;

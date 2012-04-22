@@ -17,6 +17,7 @@ package Src.Entity
     public var health:int=14;
     public var announced:Boolean=false;
     public var ready:Boolean=false;
+    public var dying:Boolean=false;
     
     public function Snake(pos:Point)
     {
@@ -73,8 +74,7 @@ package Src.Entity
               game.entityManager.push(new Destroyer(pos));
             } else
             {
-              game.mapStore.increment();
-              return;
+              dying = true;
             }
           }
         }
@@ -92,11 +92,35 @@ package Src.Entity
       }
     }
     
+    public function updateDying():void
+    {
+      if(!timer)
+      {
+        var piece:CCollider = pieces.shift();
+        Particle.spawnBurst(game.entityManager, piece.pos, "particle", pieces.length == 0 ? 1 : 2);
+        timer = 10;
+        if(pieces.length == 0)
+        {
+          game.mapStore.increment();
+          return;
+        }        
+      } else
+      {
+        timer--;
+      }
+    }
+    
     public override function update():void
     {
       if(!ready)
       {
         updateFallIns();
+        return;
+      }
+      
+      if(dying)
+      {
+        updateDying();
         return;
       }
     
