@@ -145,10 +145,11 @@ package Src
       var woman:Woman = null;
       if(persist)
       {
+        var hasBall:Boolean = tileMap.hasABall();
         for(i=0; i<entityManager.entities.length; i++)
         {
           var e:Entity = entityManager.entities[i];
-          if(e is Woman || e is Ball /*|| e is Spinner TODO: Revist */)
+          if(e is Woman)
             newManager.push(e);
           if(e is Slug)
             Particle.spawnBurst(newManager, Slug(e).collider.pos, "particle", 0);
@@ -158,6 +159,13 @@ package Src
             Particle.spawnBurst(newManager, MapAdvancer(e).collider.pos, "particle", 0);
           if(e is Destroyer)
             Particle.spawnBurst(newManager, Destroyer(e).collider.pos, "particle", 1);
+          if(e is Ball)
+          {
+            if(hasBall)
+              newManager.push(e);
+            else
+              Particle.spawnBurst(newManager, Ball(e).collider.pos, "particle", 0);
+          }
         }
       }
       

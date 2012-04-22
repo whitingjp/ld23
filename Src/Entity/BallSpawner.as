@@ -11,6 +11,7 @@ package Src.Entity
   public class BallSpawner extends Entity
   {
     public var collider:CCollider;
+    public static var ballSpawnTimer:int=20;
     public function BallSpawner(pos:Point)
     {
       collider = new CCollider(this);
@@ -28,7 +29,15 @@ package Src.Entity
     public override function update():void
     {
       if(!game.entityManager.findEntityOfClass(Ball))
-        game.entityManager.push(new Ball(collider.pos.clone()));
+      {
+        if(ballSpawnTimer)
+          ballSpawnTimer--;
+        else
+          game.entityManager.push(new Ball(collider.pos.clone()));
+      } else
+      {
+        ballSpawnTimer=20;
+      }
     }
   }
 }

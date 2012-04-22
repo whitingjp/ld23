@@ -23,6 +23,7 @@ package Src.Tiles
     private static const OBJ_SPINNER:int=7;
     private static const OBJ_ISBOSS:int=8;
     public static const OBJ_ISWIN:int=9;
+    public static const OBJ_FAKEBALL:int=10;
   
     public static var tileWidth:int=10;
     public static var tileHeight:int=10;
@@ -131,6 +132,15 @@ package Src.Tiles
         game.soundManager.playMusic('boss');
       else
         game.soundManager.playMusic('theme');
+    }
+    
+    public function hasABall():Boolean
+    {
+      for(var i:int=0; i<tiles.length; i++)
+        if(tiles[i].t == Tile.T_ENTITY)
+          if(tiles[i].xFrame == OBJ_BALL || tiles[i].xFrame == OBJ_FAKEBALL)
+            return true;
+      return false;     
     }
     
     public function render_tile(tile:Tile, x:int, y:int, layer:Number):void

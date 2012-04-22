@@ -118,7 +118,7 @@ package Src.Tiles
       {
         selected = new Tile();
         selected.t = Tile.T_ENTITY;
-        selected.xFrame = TileMap.OBJ_ISWIN;
+        selected.xFrame = TileMap.OBJ_FAKEBALL;
       }
       if(game.input.keyDownDictionary[Input.KEY_SHIFT] && !inPallete)
       {

@@ -65,7 +65,7 @@ package Src.Entity
             collider.speed.y *= -1;
             slug.alive = false;
             Particle.spawnBurst(game.entityManager, collider.pos, "particle", 0);
-            playBounceSound
+            playBounceSound();
             game.soundManager.playSound("hitmonster");
           }
         }
@@ -77,7 +77,7 @@ package Src.Entity
             collider.speed.y *= -1;
             e.alive = false;
             Particle.spawnBurst(game.entityManager, collider.pos, "particle", 0);
-            playBounceSound
+            playBounceSound();
             game.soundManager.playSound("hitmonster");
           }
         }
