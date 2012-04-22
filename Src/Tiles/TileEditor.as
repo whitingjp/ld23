@@ -130,8 +130,10 @@ package Src.Tiles
         autoTile(p.x-1, p.y);
       }
       
-      if(game.input.keyDownDictionary[Input.KEY_SHIFT] && game.input.keyPressedDictionary[Input.KEY_X])
+      if(game.input.keyDownDictionary[Input.KEY_1] && game.input.keyPressedDictionary[Input.KEY_X])
         game.mapStore.cut();
+      if(game.input.keyDownDictionary[Input.KEY_1] && game.input.keyPressedDictionary[Input.KEY_Z])
+        game.mapStore.splice();
       
       if(game.input.keyPressedDictionary[Input.KEY_C])
         saveToFile("level.lev");

@@ -51,6 +51,11 @@ package Src.Tiles
       tileMaps.splice(current, 1);
     }
     
+    public function splice():void
+    {
+      tileMaps.splice(current, 0, new TileMap(game));
+    }
+    
     public function serialise(byteArray:ByteArray):void
     {
       byteArray.writeInt(TileMap.magic);
