@@ -19,6 +19,7 @@ package Src.Tiles
     private static const OBJ_DESTROYER:int=4;
     private static const OBJ_BIGSLUG:int=5;
     private static const OBJ_SNAKE:int=6;
+    private static const OBJ_SPINNER:int=7;
   
     public static var tileWidth:int=10;
     public static var tileHeight:int=10;
@@ -75,7 +76,7 @@ package Src.Tiles
       {
         var y:int = i/width;
         var x:int = i-(y*width);
-        var p:Point = new Point(x*tileWidth, y*tileHeight);
+        var p:Point = new Point(x*tileWidth, y*tileHeight-4);
         if(tiles[i].t == Tile.T_ENTITY)
         {
           switch(tiles[i].xFrame)
@@ -101,6 +102,9 @@ package Src.Tiles
               break;
             case OBJ_SNAKE:
               game.entityManager.push(new Snake(p));
+              break;
+            case OBJ_SPINNER:
+              game.entityManager.push(new Spinner(p));
               break;
           }
         }
