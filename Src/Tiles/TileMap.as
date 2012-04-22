@@ -37,6 +37,7 @@ package Src.Tiles
     public var sprites:Array;
     
     public var game:Game;
+    public var isBoss:Boolean;
     
     public function TileMap(game:Game)
     {
@@ -71,9 +72,10 @@ package Src.Tiles
       }      
     }
     
+    
     public function spawnEntities():void
     {
-      var isBoss:Boolean = false;
+      isBoss = false;
       for(var i:int=0; i<tiles.length; i++)
       {
         var y:int = i/width;
@@ -109,7 +111,7 @@ package Src.Tiles
               game.entityManager.push(new Spinner(p));
               break;
             case OBJ_ISBOSS:
-              isBoss = true;
+              isBoss=true;
               break;
           }
         }
@@ -128,22 +130,24 @@ package Src.Tiles
     {
       if(tile.t == Tile.T_WALL)
       {
-        game.renderer.drawSprite(sprites[0], x, y, layer, 0, 0);
+        game.renderer.drawSprite(sprites[0], x, y, layer, isBoss ? 1:0, 0);
         game.renderer.drawSprite(sprites[tile.t], x, y, layer+tileHeight+tileHeight/4, tile.xFrame, tile.yFrame);
       }
       game.renderer.drawSprite(sprites[tile.t], x, y, layer, tile.xFrame, tile.yFrame);
     }
     
-    public function render_transition_tile(tile:Tile, old:Tile, x:int, y:int, transition:Number, layer:Number):void
+    public function render_transition_tile(tile:Tile, old:Tile, x:int, y:int, transition:Number, layer:Number, oldIsBoss:Boolean):void
     {      
       if(transition < 1)
       {
         var xFrame:int=-1;
         var yFrame:int=-1;
+        var boss:Boolean = isBoss;
         if(tile.t == Tile.T_WALL && old.t == Tile.T_NONE)
         {
           xFrame = transition*5;
           yFrame = tile.xFrame;
+          boss = oldIsBoss;          
         }
         else if(tile.t == Tile.T_NONE && old.t == Tile.T_WALL)
         {
@@ -157,15 +161,16 @@ package Src.Tiles
           {
             xFrame = 4-transition*10;
             yFrame = old.xFrame;
+            boss = oldIsBoss;
           } else
           {
             xFrame = (transition-0.5)*10;
-            yFrame = tile.xFrame;
+            yFrame = tile.xFrame;            
           }
         }
         if(xFrame != -1)
         {
-          game.renderer.drawSprite(sprites[0], x, y, layer, 0, 0);
+          game.renderer.drawSprite(sprites[0], x, y, boss ? 1 : 0, 0);
           game.renderer.drawSprite("walltransition", x, y, layer+tileHeight/4, xFrame, yFrame);
           return;
         }
@@ -184,7 +189,7 @@ package Src.Tiles
         var tile:Tile = getTile(x,y);
         var layer:Number = y*tileHeight-tileHeight+layerOffset;
         if(old)
-          render_transition_tile(tile, old.getTile(x,y), x*tileWidth, y*tileHeight, transition, layer);
+          render_transition_tile(tile, old.getTile(x,y), x*tileWidth, y*tileHeight, transition, layer, old.isBoss);
         else
           render_tile(tile, x*tileWidth, y*tileHeight, layer);
       }
@@ -265,10 +270,11 @@ package Src.Tiles
         if(tile.t == Tile.T_ENTITY)
         {
           tile.t = Tile.T_NONE;
-          tile.xFrame = 0;
+          tile.xFrame = isBoss ? 1 : 0;
         }
         renderTileMap.setTileByIndex(i, tile);
       }
+      renderTileMap.isBoss = isBoss;
     }
   }
 }
