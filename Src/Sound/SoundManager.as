@@ -7,8 +7,8 @@ package Src.Sound
 
   public class SoundManager
   {
-    public static var SOUND_ENABLED:Boolean = true;
-    public static var MUSIC_ENABLED:Boolean = true;
+    public static var SOUND_ENABLED:Boolean = false;
+    public static var MUSIC_ENABLED:Boolean = false;
 
     [Embed(source="../../sound/ld23.mp3")]
     [Bindable]
