@@ -46,6 +46,11 @@ package Src.Tiles
       game.soundManager.playSound("decrement");
     }
     
+    public function cut():void
+    {
+      tileMaps.splice(current, 1);
+    }
+    
     public function serialise(byteArray:ByteArray):void
     {
       byteArray.writeInt(TileMap.magic);
