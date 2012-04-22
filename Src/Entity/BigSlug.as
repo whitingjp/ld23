@@ -47,10 +47,10 @@ package Src.Entity
     
     public function hurt():void
     {
-      game.soundManager.playSound("bounceball");
-      game.soundManager.playSound("hitmonster");
       if(hurtTimer <= 0)
       {
+        game.soundManager.playSound("bounceball");
+        game.soundManager.playSound("hitmonster");
         health -= 0.05;
         hurtTimer = 1;
         if(health < 0)

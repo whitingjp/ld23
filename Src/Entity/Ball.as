@@ -15,7 +15,7 @@ package Src.Entity
     public var fallIn:CFallIn;
     public var moving:Boolean;
     public var grabbedTimer:int;
-    
+    public var bounceSoundTimer:int;
 
     public function Ball(pos:Point)
     {      
@@ -34,6 +34,7 @@ package Src.Entity
       collider.speed = new Point(0,0);
       collider.rect = new Rectangle(0,4,9,8);
       grabbedTimer = 0;
+      bounceSoundTimer = 0;
     }
     
     public function updateMove():void
@@ -64,7 +65,7 @@ package Src.Entity
             collider.speed.y *= -1;
             slug.alive = false;
             Particle.spawnBurst(game.entityManager, collider.pos, "particle", 0);
-            game.soundManager.playSound("bounceball");
+            playBounceSound
             game.soundManager.playSound("hitmonster");
           }
         }
@@ -76,7 +77,7 @@ package Src.Entity
             collider.speed.y *= -1;
             e.alive = false;
             Particle.spawnBurst(game.entityManager, collider.pos, "particle", 0);
-            game.soundManager.playSound("bounceball");
+            playBounceSound
             game.soundManager.playSound("hitmonster");
           }
         }
@@ -92,12 +93,19 @@ package Src.Entity
       }
     }
     
+    public function playBounceSound():void
+    {
+      if(bounceSoundTimer > 0) return;
+      game.soundManager.playSound("bounceball");
+      bounceSoundTimer = 10;
+    }
+    
     public function updateBounce():void
     {
       var bounced:Boolean=false
       for(var i:int=0; i<4; i++)
         if(collider.collides[i] & collider.collisionMask)
-          game.soundManager.playSound("bounceball");
+          playBounceSound();
     }
     
     public override function update():void
@@ -108,6 +116,7 @@ package Src.Entity
         return;
       }
     
+      if(bounceSoundTimer) bounceSoundTimer--;
       if(grabbedTimer) grabbedTimer--;
     
       collider.process();
