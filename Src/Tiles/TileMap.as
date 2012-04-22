@@ -117,6 +117,8 @@ package Src.Tiles
               isBoss=true;
               break;
             case OBJ_ISWIN:
+              Game.so.data.current = 0;
+              Game.so.flush();
               game.changeState(Game.STATE_FE);
               game.frontEnd.swapScreen(new Credits());
               game.frontEnd.instantTransition();

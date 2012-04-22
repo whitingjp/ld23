@@ -7,6 +7,7 @@ package Src.Entity
   import flash.ui.Keyboard;
   import flash.utils.Dictionary;
   import Src.Tiles.*;
+  import Src.*;
 
   public class Snake extends Entity
   {
@@ -137,6 +138,8 @@ package Src.Entity
         if(pieces.length == 0)
         {
           game.mapStore.increment();
+          Game.so.data.current = game.mapStore.current;
+          Game.so.flush();     
           return;
         }        
       } else

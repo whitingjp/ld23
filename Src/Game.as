@@ -9,6 +9,7 @@ package Src
   import flash.text.*;
   import flash.utils.*;
   import flash.ui.Keyboard;
+  import flash.net.*;
   import Src.FE.*;
   import Src.Entity.*;
   import Src.Gfx.*;
@@ -45,6 +46,8 @@ package Src
     public var tileEditor:TileEditor;
     public var frontEnd:Frontend;
     public var camera:Camera;
+    
+    public static const so:SharedObject = SharedObject.getLocal("LD23", "/");
     
     public static var TRANSITION_SPEED:Number = 0.05;
     public var transition:Number;
@@ -185,6 +188,8 @@ package Src
         soundManager.MUSIC_ENABLED = !soundManager.MUSIC_ENABLED;
         soundManager.SOUND_ENABLED = !soundManager.SOUND_ENABLED;
         soundManager.playMusic(soundManager.currentTrack, true);
+        Game.so.data.mute = !soundManager.MUSIC_ENABLED;
+        Game.so.flush();
       }
     }
     

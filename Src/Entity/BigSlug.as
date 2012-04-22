@@ -7,6 +7,7 @@ package Src.Entity
   import flash.ui.Keyboard;
   import flash.utils.Dictionary;
   import Src.Tiles.*;
+  import Src.*;
 
   public class BigSlug extends Entity
   {
@@ -108,7 +109,11 @@ package Src.Entity
       dstBitmap.fillRect(dstBitmap.rect, 0x00000000);
       dstBitmap.draw(srcBitmap, matrix);
       if(deathScale <= 0)
+      {
         game.mapStore.increment();
+        Game.so.data.current = game.mapStore.current;
+        Game.so.flush();     
+      }
     }
 
     public override function update():void

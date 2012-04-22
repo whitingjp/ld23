@@ -85,6 +85,8 @@ package Src.Entity
             collider.pos = ma.collider.pos.clone();
             collider.pos.y -= 4;
             game.mapStore.increment(); // this resets entities
+            Game.so.data.current = game.mapStore.current;
+            Game.so.flush();     
             return;
           }
         }
@@ -95,6 +97,8 @@ package Src.Entity
         if(c && collider.intersects(c) && game.transition == 1)
         {
           game.mapStore.decrement(); // this resets entities
+          Game.so.data.current = game.mapStore.current;
+          Game.so.flush();     
           return;
         }
       }

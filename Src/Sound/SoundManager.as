@@ -4,6 +4,7 @@ package Src.Sound
   import mx.collections.*;
   import flash.media.*;
   import flash.events.*;
+  import Src.*;
 
   public class SoundManager
   {
@@ -24,6 +25,8 @@ package Src.Sound
 
     public function SoundManager()
     {
+      SOUND_ENABLED = !Game.so.data.mute;
+      MUSIC_ENABLED = !Game.so.data.mute;
       sounds = new Object()
       musicSounds = new Object();
     }

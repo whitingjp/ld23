@@ -34,6 +34,13 @@ package Src.FE
     
     public override function update():void
     {
+      if(game.mapStore.current != 0)
+      {
+        game.mapStore.current = 0;
+        Game.so.data.current = game.mapStore.current;
+        Game.so.flush();     
+      }
+    
       timer += 0.005;
       if(timer > 1)
       {

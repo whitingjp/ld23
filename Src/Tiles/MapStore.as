@@ -90,7 +90,10 @@ package Src.Tiles
         for(var i:int=0; i<tileMap.tiles.length; i++)
           tileMap.tiles[i].readFromByteArray(byteArray);
       }
-      current = 0;
+      if(Game.so.data.current)
+        current = Game.so.data.current;
+      else
+        current = 0;
     }
   }
 }
