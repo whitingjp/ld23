@@ -18,6 +18,7 @@ package Src.Entity
     public var announced:Boolean=false;
     public var ready:Boolean=false;
     public var dying:Boolean=false;
+    public var hurtTimer:int;
     
     public function Snake(pos:Point)
     {
@@ -39,15 +40,19 @@ package Src.Entity
         var fallIn:CFallIn = new CFallIn(sprite, col.pos);
         fallIns.push(fallIn);
       }
+      hurtTimer = 0;
     }
     
     public function updateHurt():void
     {
+      if(hurtTimer)
+        return;
       for(var i:int = 0; i<game.entityManager.entities.length; i++)
       {
         var e:Entity = game.entityManager.entities[i];
-        for(var j:int = 0; j<pieces.length; j++)
-        {          
+        var j:int;
+        for(j = 0; j<pieces.length; j++)
+        {
           if(e is Woman)
           {
             if(pieces[j].intersects(Woman(e).collider))
@@ -62,9 +67,7 @@ package Src.Entity
         {
           if(pieces[pieces.length-1].intersects(Destroyer(e).collider))
           {
-            // hurt
-            game.soundManager.playSound("hitmonster");
-            health--;
+            hurt();
             e.alive = false;
             if(health)
             {
@@ -72,13 +75,33 @@ package Src.Entity
               var yp:int = Math.random()*4+2;
               var pos:Point = new Point(xp*10, yp*10);
               game.entityManager.push(new Destroyer(pos));
-            } else
+            }
+          } 
+        }
+        if(e is Ball)
+        {
+          for(var j:int = 0; j<pieces.length-1; j++)
+          {
+            if(pieces[j].intersects(Ball(e).collider))
             {
-              dying = true;
+              Ball(e).collider.speed.x *= -1;
+              Ball(e).collider.speed.y *= -1;
             }
           }
+          if(pieces[pieces.length-1].intersects(Ball(e).collider))
+            hurt();
         }
       }
+    }
+    
+    public function hurt():void
+    {
+      // hurt
+      game.soundManager.playSound("hitmonster");
+      health--;      
+      if(!health)
+        dying = true;
+      hurtTimer = 30;
     }
     
     public function updateFallIns():void
@@ -150,8 +173,11 @@ package Src.Entity
           col.pos.y = head.pos.y-diff.y*speed;
         }
         pieces.push(col);
-      }      
-      timer--;
+      }     
+      if(hurtTimer)
+        hurtTimer--;
+      else
+        timer--;
       
       updateHurt();
     }
@@ -169,7 +195,9 @@ package Src.Entity
       {    
         for(i=0; i<pieces.length; i++)
         {
-          var xFrame:int = i==pieces.length-1 ? 1 : 0;
+          var xFrame:int = 0;
+          if(i==pieces.length-1)
+            xFrame = (hurtTimer/4)%2+1;
           var layerOffset:Number= Number(i)/pieces.length;
           game.renderer.drawSprite("snake", pieces[i].pos.x, pieces[i].pos.y, pieces[i].pos.y+layerOffset, xFrame);
         }
