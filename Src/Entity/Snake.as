@@ -70,12 +70,7 @@ package Src.Entity
             hurt();
             e.alive = false;
             if(health)
-            {
-              var xp:int = Math.random()*4+2;
-              var yp:int = Math.random()*4+2;
-              var pos:Point = new Point(xp*10, yp*10);
-              game.entityManager.push(new Destroyer(pos));
-            }
+              newDestroyer();
           } 
         }
         if(e is Ball)
@@ -92,6 +87,22 @@ package Src.Entity
             hurt();
         }
       }
+    }
+    
+    public function newDestroyer():void
+    {
+      var woman:Woman = Woman(game.entityManager.findEntityOfClass(Woman));
+      if(!woman) return;
+      var p:Point = woman.collider.pos;
+      var sqrDist:Number = 0;
+      var pos:Point = new Point();
+      while(sqrDist < 200)
+      {
+        pos.x = (Math.random()*4+2)*10;
+        pos.y = (Math.random()*4+2)*10;
+        sqrDist = (pos.x-p.x)*(pos.x-p.x) + (pos.y-p.y)*(pos.y-p.y);
+      }
+      game.entityManager.push(new Destroyer(pos));
     }
     
     public function hurt():void
