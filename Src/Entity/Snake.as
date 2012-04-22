@@ -96,6 +96,7 @@ package Src.Entity
     {
       if(!timer)
       {
+        game.soundManager.playSound("hitmonster");
         var piece:CCollider = pieces.shift();
         Particle.spawnBurst(game.entityManager, piece.pos, "particle", pieces.length == 0 ? 1 : 2);
         timer = 10;

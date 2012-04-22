@@ -19,7 +19,9 @@ package Src.Entity
     public var renderOff:Point;
     public var health:Number;
     public var hurtTimer:Number;
-    public var announced:Boolean = false;
+    public var announced:Boolean = false;    
+    public var dying:Boolean=false;
+    public var deathScale:Number=1;
 
     public function BigSlug(pos:Point)
     {      
@@ -52,10 +54,7 @@ package Src.Entity
         health -= 0.05;
         hurtTimer = 1;
         if(health < 0)
-        {
-          alive = false;
-          game.mapStore.increment();
-        }
+          dying = true;
         var xpos:int = Math.random()*70+10;
         game.entityManager.push(new Slug(new Point(xpos,10)));
       } else
@@ -82,11 +81,34 @@ package Src.Entity
       var eyewob:Number = (Math.sin(anim*3)+1)*4;
       var healthMod:Number = (health+5)/6;
       matrix.scale(xwob*healthMod, ywob*healthMod);
-      renderOff.x = xwob*30-30;
-      renderOff.y = ywob*18-18;
+      renderOff.x = xwob*healthMod*30-30;
+      renderOff.y = ywob*healthMod*18-18;
       dstBitmap.fillRect(dstBitmap.rect, 0x00000000);
       dstBitmap.draw(srcBitmap, matrix);
       dstBitmap.draw(eyeBitmap);
+    }
+    
+    public function updateDying():void
+    {
+      hurtTimer -= 0.2;
+      if(hurtTimer < 0)
+      {
+        hurtTimer += 1;
+        var pos:Point = collider.pos.clone();
+        pos.x += 15;
+        pos.y += 9;
+        Particle.spawnBurst(game.entityManager, pos, "bigparticle", 0);
+      }
+      deathScale -= 0.005;
+      var healthMod:Number = (health+5)/6;
+      var matrix:Matrix = new Matrix();
+      matrix.scale(healthMod*deathScale, healthMod*deathScale);
+      renderOff.x = healthMod*deathScale*30-30;
+      renderOff.y = healthMod*deathScale*18-18;
+      dstBitmap.fillRect(dstBitmap.rect, 0x00000000);
+      dstBitmap.draw(srcBitmap, matrix);
+      if(deathScale <= 0)
+        game.mapStore.increment();
     }
 
     public override function update():void
@@ -94,6 +116,12 @@ package Src.Entity
       if(!fallIn.isDone())
       {
         fallIn.update();
+        return;
+      }
+      
+      if(dying)
+      {
+        updateDying();
         return;
       }
     
