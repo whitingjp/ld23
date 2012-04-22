@@ -45,6 +45,9 @@ package Src.FE
         game.changeState(Game.STATE_GAME);
         game.resetEntities();
       }
+      
+      if(game.input.keyPressedDictionary[Input.KEY_SPACE])
+        game.frontEnd.swapScreen(new Splash());
     }
     
     public override function render():void

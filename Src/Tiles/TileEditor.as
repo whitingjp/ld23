@@ -114,6 +114,12 @@ package Src.Tiles
         if(inPallete) selected = pallete.getTileAtPos(mousePos);
         else selected = tileMap.getTileAtPos(mousePos);
       }
+      if(game.input.keyPressedDictionary[Input.KEY_P])
+      {
+        selected = new Tile();
+        selected.t = Tile.T_ENTITY;
+        selected.xFrame = TileMap.OBJ_ISWIN;
+      }
       if(game.input.keyDownDictionary[Input.KEY_SHIFT] && !inPallete)
       {
         var p:Point = tileMap.getXY(i);

@@ -81,8 +81,7 @@ package Src
       tileEditor = new TileEditor(tileMap);
 
       gameState = STATE_FE;
-      //frontEnd.addScreen(new Splash());
-      frontEnd.addScreen(new Credits());
+      frontEnd.addScreen(new Splash());
 
       fpsText = new TextField();
       fpsText.textColor = 0xffffffff;

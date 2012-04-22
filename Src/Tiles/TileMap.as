@@ -9,6 +9,7 @@ package Src.Tiles
   import Src.*;
   import Src.Entity.*;
   import Src.Gfx.*;
+  import Src.FE.*;
 
   public class TileMap
   {  
@@ -21,6 +22,7 @@ package Src.Tiles
     private static const OBJ_SNAKE:int=6;
     private static const OBJ_SPINNER:int=7;
     private static const OBJ_ISBOSS:int=8;
+    public static const OBJ_ISWIN:int=9;
   
     public static var tileWidth:int=10;
     public static var tileHeight:int=10;
@@ -112,6 +114,11 @@ package Src.Tiles
               break;
             case OBJ_ISBOSS:
               isBoss=true;
+              break;
+            case OBJ_ISWIN:
+              game.changeState(Game.STATE_FE);
+              game.frontEnd.swapScreen(new Credits());
+              game.frontEnd.instantTransition();
               break;
           }
         }
