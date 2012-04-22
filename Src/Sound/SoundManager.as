@@ -8,11 +8,14 @@ package Src.Sound
   public class SoundManager
   {
     public static var SOUND_ENABLED:Boolean = true;
-    public static var MUSIC_ENABLED:Boolean = false;
+    public static var MUSIC_ENABLED:Boolean = true;
 
-    [Embed(source="../../sound/test.mp3")]
+    [Embed(source="../../sound/ld23.mp3")]
     [Bindable]
-    private var mp3Music:Class;
+    private var mp3Theme:Class;
+    [Embed(source="../../sound/ld23_boss.mp3")]
+    [Bindable]
+    private var mp3Boss:Class;
     private var musicSounds:Object;
     private var channel:SoundChannel;
     private var currentTrack:String;
@@ -38,8 +41,9 @@ package Src.Sound
       addSynth("test", "1,,0.073,,0.339,0.253,,0.38,-0.043,,,0.001,,,,0.561,-0.048,-0.039,1,-0.032,0.045,,-0.005,0.5");
 
       // Do music
-      musicSounds['test'] = new mp3Music() as SoundAsset;
-      playMusic('test');
+      musicSounds['theme'] = new mp3Theme() as SoundAsset;
+      musicSounds['boss'] = new mp3Boss() as SoundAsset;
+      playMusic('theme');
     }
 
     public function playSound(sound:String):void
@@ -70,7 +74,7 @@ package Src.Sound
 
       stopMusic();
       channel = musicSounds[currentTrack].play();
-      setVol(0.1);
+      setVol(0.5);
       channel.addEventListener(Event.SOUND_COMPLETE, soundCompleteHandler);
     }
 
