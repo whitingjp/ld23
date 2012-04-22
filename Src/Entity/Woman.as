@@ -80,6 +80,8 @@ package Src.Entity
           var ma:MapAdvancer = MapAdvancer(e);
           if(collider.intersects(ma.collider) && game.transition == 1)
           {
+            collider.pos = ma.collider.pos.clone();
+            collider.pos.y -= 4;
             game.mapStore.increment(); // this resets entities
             return;
           }
