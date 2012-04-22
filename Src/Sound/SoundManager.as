@@ -7,8 +7,8 @@ package Src.Sound
 
   public class SoundManager
   {
-    public static var SOUND_ENABLED:Boolean = false;
-    public static var MUSIC_ENABLED:Boolean = false;
+    public var SOUND_ENABLED:Boolean = true;
+    public var MUSIC_ENABLED:Boolean = true;
 
     [Embed(source="../../sound/ld23.mp3")]
     [Bindable]
@@ -18,7 +18,7 @@ package Src.Sound
     private var mp3Boss:Class;
     private var musicSounds:Object;
     private var channel:SoundChannel;
-    private var currentTrack:String="";
+    public var currentTrack:String="";
 
     private var sounds:Object;
 
@@ -74,6 +74,8 @@ package Src.Sound
       if(currentTrack == track && !force)
         return;
       currentTrack = track;
+      
+      stopMusic();
       if(!MUSIC_ENABLED)
         return;
         
@@ -83,7 +85,7 @@ package Src.Sound
         return;      
       }
 
-      stopMusic();
+
       channel = musicSounds[currentTrack].play();
       setVol(0.4);
       channel.addEventListener(Event.SOUND_COMPLETE, soundCompleteHandler);
@@ -109,5 +111,6 @@ package Src.Sound
     {
       playMusic(currentTrack, true);
     }
+    
   }
 }

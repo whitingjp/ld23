@@ -130,6 +130,8 @@ package Src
         
       if(!IS_FINAL)
         debugKeys();
+        
+      updateSoundState();
       
         
       // Update input last, so mouse presses etc. will register first..
@@ -175,6 +177,22 @@ package Src
         tileMap.spawnEntities();
       tileMap.copyToRenderTileMap(renderTileMap);
     }
+    
+    private function updateSoundState():void
+    {
+      if(input.mousePressed && input.mousePos.x > 80 && input.mousePos.y < 10)
+      {
+        soundManager.MUSIC_ENABLED = !soundManager.MUSIC_ENABLED;
+        soundManager.SOUND_ENABLED = !soundManager.SOUND_ENABLED;
+        soundManager.playMusic(soundManager.currentTrack, true);
+      }
+    }
+    
+    private function renderSoundState():void
+    {
+      var soundOn:Boolean = soundManager.MUSIC_ENABLED;
+      renderer.drawSprite("mute", 80, 0, 1000, soundOn ? 0 : 1);
+    }
 
     private function render():void
     {
@@ -192,6 +210,9 @@ package Src
         tileEditor.render();      
       if(gameState == STATE_FE)
         frontEnd.render();
+
+      renderSoundState();
+       
 		
       if(false && !IS_FINAL)
         renderer.backBuffer.draw(fpsText);

@@ -79,6 +79,7 @@ package Src.Gfx
       sprites["youwin"] = new SpriteDef(80,56,48,11,1,1);
       sprites["font_regular"] = new SpriteDef(0,128,5,8,27,1);
       sprites["credit_bosses"] = new SpriteDef(0,140,30,20,2);
+      sprites["mute"] = new SpriteDef(110,14,10,10,2);
 
       fade = 0;
       fadeSpeed = 0.005;
