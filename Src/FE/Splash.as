@@ -27,10 +27,17 @@ package Src.FE
     {
       anim = anim + 0.02;
       if(anim > 1) anim--;
-      if(game.input.anyKey)
+      if(game.input.mousePressed)
       {
-        game.changeState(Game.STATE_GAME);
-        game.resetEntities();
+        if(Game.so.data.current)
+        {
+          game.frontEnd.swapScreen(new ResumeYesNo());
+        }
+        else
+        {
+          game.changeState(Game.STATE_GAME);
+          game.resetEntities();
+        }
       }
     }
     
@@ -38,7 +45,7 @@ package Src.FE
     {
       game.renderer.backBuffer.copyPixels(splash, splash.rect, new Point(0,0));
       if(anim < 0.65)
-        game.renderer.drawSprite("pressakey", 19, 82);
+        game.renderer.drawSpriteText("click to start", 45, 77);
     }
   }
 }

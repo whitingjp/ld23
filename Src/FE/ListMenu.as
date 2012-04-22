@@ -15,7 +15,7 @@ package Src.FE
 
     public var screen:Screen;
 
-    public function ListMenu(screen:Screen, x:int=10, y:int=15, s:int=16)
+    public function ListMenu(screen:Screen, x:int=45, y:int=30, s:int=16)
     {
       items = new Array();
       selectedItem = -1;
@@ -57,9 +57,8 @@ package Src.FE
       {
         var offsets:Point = new Point(0,0);
         if(i==selectedItem)
-          offsets = new Point(Math.random()*3-1, Math.random()*3-1);
-        renderer.drawFontText(items[i], pos.x+offsets.x, y+offsets.y,
-                              false, 0xffffffff, siz);
+          offsets = new Point(Math.random()*2-1, Math.random()*2-1);
+        renderer.drawSpriteText(items[i], pos.x+offsets.x, y+offsets.y);
         y += siz;
       }
     }
