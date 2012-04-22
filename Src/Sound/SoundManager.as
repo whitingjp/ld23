@@ -18,7 +18,7 @@ package Src.Sound
     private var mp3Boss:Class;
     private var musicSounds:Object;
     private var channel:SoundChannel;
-    private var currentTrack:String;
+    private var currentTrack:String="";
 
     private var sounds:Object;
 
@@ -43,7 +43,7 @@ package Src.Sound
       // Do music
       musicSounds['theme'] = new mp3Theme() as SoundAsset;
       musicSounds['boss'] = new mp3Boss() as SoundAsset;
-      playMusic('theme');
+      playMusic('boss');
     }
 
     public function playSound(sound:String):void
@@ -62,6 +62,8 @@ package Src.Sound
 
     public function playMusic(track:String):void
     {
+      if(currentTrack == track)
+        return;
       currentTrack = track;
       if(!MUSIC_ENABLED)
         return;

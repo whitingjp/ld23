@@ -20,6 +20,7 @@ package Src.Tiles
     private static const OBJ_BIGSLUG:int=5;
     private static const OBJ_SNAKE:int=6;
     private static const OBJ_SPINNER:int=7;
+    private static const OBJ_ISBOSS:int=8;
   
     public static var tileWidth:int=10;
     public static var tileHeight:int=10;
@@ -72,6 +73,7 @@ package Src.Tiles
     
     public function spawnEntities():void
     {
+      var isBoss:Boolean = false;
       for(var i:int=0; i<tiles.length; i++)
       {
         var y:int = i/width;
@@ -106,6 +108,9 @@ package Src.Tiles
             case OBJ_SPINNER:
               game.entityManager.push(new Spinner(p));
               break;
+            case OBJ_ISBOSS:
+              isBoss = true;
+              break;
           }
         }
         if(tiles[i].t == Tile.T_WALL && tiles[i].xFrame==1)
@@ -113,6 +118,10 @@ package Src.Tiles
         if(tiles[i].t == Tile.T_WALL && tiles[i].xFrame==2)
           game.entityManager.push(new Target(p));
       }
+      if(isBoss)
+        game.soundManager.playMusic('boss');
+      else
+        game.soundManager.playMusic('theme');
     }
     
     public function render_tile(tile:Tile, x:int, y:int, layer:Number):void

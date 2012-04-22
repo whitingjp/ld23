@@ -59,7 +59,7 @@ package Src.Gfx
       sprites["player"] = new SpriteDef(0,42,10,14,8,2);
       sprites["decoration"] = new SpriteDef(0,0,10,14,2,1);
       sprites["walls"] = new SpriteDef(0,14,10,14,3,1);
-      sprites["objects"] = new SpriteDef(0,28,10,14,8,1);
+      sprites["objects"] = new SpriteDef(0,28,10,14,9,1);
       sprites["mapadvancer"] = new SpriteDef(10,28,10,14);
       sprites["marker"] = new SpriteDef(60,70,1,1);
       sprites["walltransition"] = new SpriteDef(0,84,10,14,5,3);
@@ -69,7 +69,7 @@ package Src.Gfx
       sprites["slug"] = new SpriteDef(0,70,10,14,2);
       sprites["destroyer"] = new SpriteDef(20,70,10,14,2);
       sprites["bigslug"] = new SpriteDef(30,0,30,18,3);
-      sprites["snake"] = new SpriteDef(80,28,10,14,2);
+      sprites["snake"] = new SpriteDef(80,42,10,14,2);
       sprites["spinner"] = new SpriteDef(40,70,10,14,2);
 
       fade = 0;
