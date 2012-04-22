@@ -69,9 +69,9 @@ package Src.Sound
       sounds[sound].playCachedMutation();
     }
 
-    public function playMusic(track:String):void
+    public function playMusic(track:String, force:Boolean=false):void
     {
-      if(currentTrack == track)
+      if(currentTrack == track && !force)
         return;
       currentTrack = track;
       if(!MUSIC_ENABLED)
@@ -107,7 +107,7 @@ package Src.Sound
 
     private function soundCompleteHandler(event:Event):void
     {
-      playMusic(currentTrack);
+      playMusic(currentTrack, true);
     }
   }
 }
