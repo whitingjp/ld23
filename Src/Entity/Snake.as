@@ -11,22 +11,32 @@ package Src.Entity
   public class Snake extends Entity
   {
     public var pieces:Array;
+    public var fallIns:Array;
     public var dir:int;
     public var timer:int=0;
     public var health:int=14;
     public var announced:Boolean=false;
+    public var ready:Boolean=false;
     
     public function Snake(pos:Point)
     {
       pieces = new Array();
+      fallIns = new Array();
       dir = 1;
       for(var i:int=0; i<13; i++)
       {
         var col:CCollider = new CCollider(this);
         col.pos = pos.clone();
+        col.pos.x += i*3;
+        col.pos.y += Math.sin(Number(i)/2)*2;
         col.rect = new Rectangle(2,6,6,6);
         col.speed = new Point(0,0);
         pieces.push(col);
+        
+        var sprite:CSprite = new CSprite(this, "snake");
+        if(i==12) sprite.xframe=1;
+        var fallIn:CFallIn = new CFallIn(sprite, col.pos);
+        fallIns.push(fallIn);
       }
     }
     
@@ -71,8 +81,25 @@ package Src.Entity
       }
     }
     
+    public function updateFallIns():void
+    {
+      ready = true;
+      for(var i:int = 0; i<fallIns.length; i++)
+      {
+        fallIns[i].update();
+        if(!fallIns[i].isDone())
+          ready = false;
+      }
+    }
+    
     public override function update():void
     {
+      if(!ready)
+      {
+        updateFallIns();
+        return;
+      }
+    
       if(!announced)
       {
         game.soundManager.playSound("bossappear");
@@ -106,11 +133,21 @@ package Src.Entity
     
     public override function render():void
     {
-      for(var i:int=0; i<pieces.length; i++)
+      var i:int;
+      if(!ready)
       {
-        var xFrame:int = i==pieces.length-1 ? 1 : 0;
-        var layerOffset:Number= Number(i)/pieces.length;
-        game.renderer.drawSprite("snake", pieces[i].pos.x, pieces[i].pos.y, pieces[i].pos.y+layerOffset, xFrame);
+        for(i=0; i<fallIns.length; i++)
+        {
+          fallIns[i].render();
+        }
+      } else
+      {    
+        for(i=0; i<pieces.length; i++)
+        {
+          var xFrame:int = i==pieces.length-1 ? 1 : 0;
+          var layerOffset:Number= Number(i)/pieces.length;
+          game.renderer.drawSprite("snake", pieces[i].pos.x, pieces[i].pos.y, pieces[i].pos.y+layerOffset, xFrame);
+        }
       }
     }
   }
