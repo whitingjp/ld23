@@ -170,7 +170,7 @@ package Src.Tiles
         }
         if(xFrame != -1)
         {
-          game.renderer.drawSprite(sprites[0], x, y, boss ? 1 : 0, 0);
+          game.renderer.drawSprite(sprites[0], x, y, layer, boss ? 1 : 0, 0);
           game.renderer.drawSprite("walltransition", x, y, layer+tileHeight/4, xFrame, yFrame);
           return;
         }
