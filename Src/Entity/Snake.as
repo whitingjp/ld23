@@ -80,7 +80,7 @@ package Src.Entity
         }
         if(e is Ball)
         {
-          for(var j:int = 0; j<pieces.length-1; j++)
+          for(j= 0; j<pieces.length-1; j++)
           {
             if(pieces[j].intersects(Ball(e).collider))
             {
