@@ -12,6 +12,7 @@ package Src.Entity
   {
     public var collider:CCollider;
     public var sprite:CSprite;
+    public var fallIn:CFallIn;
     
     public var walkAnim:Number;
 
@@ -19,6 +20,7 @@ package Src.Entity
     {      
       sprite = new CSprite(this, "player");
       collider = new CCollider(this);
+      fallIn = new CFallIn(sprite, pos);
       collider.collisionMask = CCollider.COL_SOLID | CCollider.COL_NOPLAYER;
       reset();
       collider.pos = pos;      
@@ -121,6 +123,12 @@ package Src.Entity
 
     public override function update():void
     {
+      if(!fallIn.isDone())
+      {
+        fallIn.update();
+        return;
+      }
+    
       collider.process();
       if(collider.enclosed()) // check stuck
         game.mapStore.decrement(); // this resets entities
@@ -137,7 +145,10 @@ package Src.Entity
     
     public override function render():void
     {
-      sprite.render(collider.pos);
+      if(!fallIn.isDone())
+        fallIn.render();
+      else
+        sprite.render(collider.pos);
     }
   }
 }

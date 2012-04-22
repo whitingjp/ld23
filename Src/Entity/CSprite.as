@@ -9,7 +9,7 @@ package Src.Entity
 
   public class CSprite
   {
-    private var e:Entity;
+    public var e:Entity;
     public var sprite:String;
     public var xframe:int;
     public var yframe:int;
