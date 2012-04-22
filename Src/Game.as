@@ -148,7 +148,7 @@ package Src
         for(i=0; i<entityManager.entities.length; i++)
         {
           var e:Entity = entityManager.entities[i];
-          if(e is Woman || e is Ball || e is Spinner)
+          if(e is Woman || e is Ball /*|| e is Spinner TODO: Revist */)
             persisted.push(e);
         }
       }
