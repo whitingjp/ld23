@@ -24,6 +24,7 @@ package Src.Entity
       collider = new CCollider(this);      
       collider.collisionMask = CCollider.COL_SOLID;
       fallIn = new CFallIn(sprite, pos);
+      fallIn.timer = 20;
       reset();
       collider.pos = pos;
       dir = 1;
