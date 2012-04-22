@@ -9,7 +9,7 @@ package Src.Entity
 
   public class Target extends Entity
   {
-    public static const ACTIVE_TIME:int = 60*9;
+    public static const ACTIVE_TIME:int = 60*11;
   
     public var collider:CCollider;
     public var sprite:CSprite;
