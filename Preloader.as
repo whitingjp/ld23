@@ -31,7 +31,7 @@ package
 			px = (sw - w) * 0.5;
 			py = (sh - h) * 0.5;		
 					
-			graphics.beginFill(0x30362a);
+			graphics.beginFill(0x121719);
 			graphics.drawRect(0, 0, sw, sh);
 			graphics.endFill();
 			
@@ -52,7 +52,7 @@ package
 			var p:Number = (loaderInfo.bytesLoaded / loaderInfo.bytesTotal);
 				
 			progressBar.graphics.clear();
-			progressBar.graphics.beginFill(0xc1f6bb);
+			progressBar.graphics.beginFill(0x304086);
 			progressBar.graphics.drawRect(px, py, p * w, h);
 			progressBar.graphics.endFill();			
 		}

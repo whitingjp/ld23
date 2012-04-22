@@ -17,7 +17,7 @@ package Src
 
   public class Game
   {    
-    private var IS_FINAL:Boolean = false;
+    public var IS_FINAL:Boolean = false;
 
     public static var STATE_GAME:int = 0;
     public static var STATE_EDITING:int = 1;
