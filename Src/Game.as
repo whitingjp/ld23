@@ -139,24 +139,28 @@ package Src
     
     private function resetEntities(persist:Boolean=false):void
     {
+      var newManager:EntityManager = new EntityManager(this, 8);
       var i:int;
       var woman:Woman = null;
-      var persisted:Array = null;
       if(persist)
       {
-        persisted = new Array();
         for(i=0; i<entityManager.entities.length; i++)
         {
           var e:Entity = entityManager.entities[i];
           if(e is Woman || e is Ball /*|| e is Spinner TODO: Revist */)
-            persisted.push(e);
+            newManager.push(e);
+          if(e is Slug)
+            Particle.spawnBurst(newManager, Slug(e).collider.pos, "particle", 0);
+          if(e is Spinner)
+            Particle.spawnBurst(newManager, Spinner(e).collider.pos, "particle", 0);
+          if(e is MapAdvancer)
+            Particle.spawnBurst(newManager, MapAdvancer(e).collider.pos, "particle", 0);
+          if(e is Destroyer)
+            Particle.spawnBurst(newManager, Destroyer(e).collider.pos, "particle", 1);
         }
       }
       
-      entityManager.reset();
-      if(persisted)
-        for(i=0; i<persisted.length; i++)
-          entityManager.push(persisted[i]);
+      entityManager = newManager;
           
       if(gameState == STATE_GAME)
         tileMap.spawnEntities();

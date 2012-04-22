@@ -46,10 +46,12 @@ package Src.Entity
         var c:CCollider = null;
         if(e is Ball) c = Ball(e).collider;
         if(e is Slug) c = Slug(e).collider;
+        if(e is Spinner) c = Spinner(e).collider;
         if(c && collider.intersects(c))
         {
           e.alive = false;
           game.soundManager.playSound("destroy");
+          Particle.spawnBurst(game.entityManager, c.pos, "particle", 0);
         }
       }
       anim += 0.05;
